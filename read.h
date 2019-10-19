@@ -1,6 +1,8 @@
 #ifndef READ_H
 #define READ_H
 
+#include <jsoncpp/json/json.h>
+#include <fstream>
 #include "graph.h"
 
 /**
@@ -15,7 +17,10 @@ class Read {
 		
 	public:
 		Read(char* file) {
-            // TODO
+		    ifstream data("airports.json");
+		    Json::Value root;
+		    Json::Reader reader;
+		    reader.parse(data,root);
         }
 		
 		graph& getGraph() {
