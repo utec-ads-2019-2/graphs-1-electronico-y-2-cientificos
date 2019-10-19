@@ -9,6 +9,7 @@ class Node {
     N data;
     EdgeSeq edges;
     double x, y;
+
 };
 
 #endif
