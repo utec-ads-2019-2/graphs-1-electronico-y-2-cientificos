@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <unordered_map>
 #include <list>
 
 #include "node.h"
@@ -21,11 +22,13 @@ public:
     typedef Graph<Tr> self;
     typedef Node<self> node;
     typedef Edge<self> edge;
-    typedef vector<node*> NodeSeq;
-    typedef list<edge*> EdgeSeq;
 
     typedef typename Tr::N N;
     typedef typename Tr::E E;
+
+    typedef unordered_map<N,node*> NodeSeq;
+    typedef list<edge*> EdgeSeq;
+
     typedef typename NodeSeq::iterator NodeIte;
     typedef typename EdgeSeq::iterator EdgeIte;
 
@@ -33,31 +36,17 @@ public:
     NodeIte ni;
     EdgeIte ei;
 
-    node *getNode(N name)
-    {
-
-        auto *tmp = new node(name);
-
-        if(nodes.size()>0) {
-            ni = find_if(nodes.begin(), nodes.end(), [&tmp](node* x) {return x->getData() == tmp->getData();});
-            if(ni != nodes.end())  return *ni;
-            else return nullptr;
-        }
-
-        else return nullptr;
-    }
-    bool insertNode(N name, E xAxis = 0, E yAxis = 0)
-    {
-        //auto tempNode = getNode(name);
-
-        //if(tempNode) return false;
-
-        //else {
+    bool insertNode(N name, E xAxis = 0, E yAxis = 0) {
+        if(nodes.find(name)!=nodes.end()) return false;
+        else {
             auto newNode = new node(name, xAxis, yAxis);
-            nodes.push_back(newNode);
-            //mapa.insert({name,name});
+            nodes[name]=newNode;
             return true;
-        //}
+        }
+    }
+    edge* insertEdge(N name_from, N name_to){
+        auto newEdge = new edge(nodes[name_from],nodes[name_to]);
+        return newEdge;
     }
 };
 
