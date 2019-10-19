@@ -1,5 +1,4 @@
-{
-"airports":
+{"airports":
 [
   {
     "City": "Postville",
@@ -18902,7 +18901,7 @@
     "Name": "Praia International Airport",
     "Country": " Santiago Island",
     "Longitude": "14.9245",
-    "Latitude": "GVNP",
+    "Latitude": "23.4865",
     "Id": "5674",
     "destinations": [
       "1050",
@@ -18927,7 +18926,7 @@
     "Name": "Sao Filipe Airport",
     "Country": " Fogo Island",
     "Longitude": "14.885",
-    "Latitude": "GVSF",
+    "Latitude": "24.4845",
     "Id": "5675",
     "destinations": [
       "5674"
@@ -49248,7 +49247,7 @@
     "Name": "Robin Hood Doncaster Sheffield Airport",
     "Country": " Sheffield",
     "Longitude": "53.474722",
-    "Latitude": "EGCN",
+    "Latitude": "1.0078",
     "Id": "5562",
     "destinations": [
       "499",

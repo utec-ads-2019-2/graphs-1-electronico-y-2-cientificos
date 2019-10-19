@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "graph.h"
 #include "read.h"
+#include "graph.h"
 
 using namespace std;
 
