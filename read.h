@@ -1,9 +1,11 @@
 #ifndef READ_H
 #define READ_H
 
-#include <jsoncpp/json/json.h>
 #include <fstream>
+#include <jsoncpp/json/json.h>
 #include "graph.h"
+
+using namespace std;
 
 /**
  * Clase de ayuda para leer el grafo desde un archivo,
@@ -17,10 +19,10 @@ class Read {
 		
 	public:
 		Read(char* file) {
-		    ifstream data("airports.json");
-		    Json::Value root;
+		    ifstream data(file);
+		    Json::Value airports;
 		    Json::Reader reader;
-		    reader.parse(data,root);
+		    reader.parse(data,airports);
         }
 		
 		graph& getGraph() {
