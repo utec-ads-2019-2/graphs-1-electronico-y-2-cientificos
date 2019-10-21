@@ -30,7 +30,7 @@ class Read {
                 for(int j=0;j<airports[i]["destinations"].size();++j){
                     auto to=airports[i]["destinations"][j].asString();
                     if(g.nodes.find(from)!=g.nodes.end() && g.nodes.find(to)!=g.nodes.end())
-                        g.nodes[from]->edges.push_back(g.insertEdge(from,to));
+                        g.nodes[from]->edges.push_back(g.createEdge(from,to));
 
                 }
             }

@@ -44,9 +44,19 @@ public:
             return true;
         }
     }
-    edge* insertEdge(N name_from, N name_to){
+    edge* createEdge(N name_from, N name_to){
         auto newEdge = new edge(nodes[name_from],nodes[name_to]);
         return newEdge;
+    }
+    node* searchNode(N name){
+        return nodes[name];
+    }
+    edge* searchEdge(N name_from, N name_to){
+        EdgeSeq e = nodes[name_from]->edges;
+        node* n = nodes[name_to];
+        for(ei=e.begin();ei!=e.end();++ei){
+            if((*ei)->nodes[1]==n) return *ei;
+        }
     }
 };
 
