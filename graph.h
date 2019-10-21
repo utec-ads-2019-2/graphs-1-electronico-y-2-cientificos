@@ -58,6 +58,13 @@ public:
             if((*ei)->nodes[1]==n) return *ei;
         }
     }
+    E graphDensity(){
+        E numEdges=0;
+        E numNodes=nodes.size();
+        for(ni=nodes.begin();ni!=nodes.end();++ni)
+            numEdges+=(*ni).second->edges.size();
+        return (2*numEdges)/(numNodes*(numNodes-1));
+    }
 };
 
 typedef Graph<Traits> graph;
