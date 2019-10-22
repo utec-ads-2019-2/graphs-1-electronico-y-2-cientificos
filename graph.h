@@ -19,6 +19,7 @@ struct Traits {
 template <typename Tr>
 class Graph {
 public:
+    bool direccionado;
     typedef Graph<Tr> self;
     typedef Node<self> node;
     typedef Edge<self> edge;
@@ -35,6 +36,8 @@ public:
     NodeSeq nodes;
     NodeIte ni;
     EdgeIte ei;
+
+    Graph(bool d):direccionado(d){};
 
     bool insertNode(N name, E xAxis = 0, E yAxis = 0) {
         if(nodes.find(name)!=nodes.end()) return false;
@@ -63,7 +66,7 @@ public:
         E numNodes=nodes.size();
         for(ni=nodes.begin();ni!=nodes.end();++ni)
             numEdges+=(*ni).second->edges.size();
-        return (2*numEdges)/(numNodes*(numNodes-1));
+        return (numEdges)/(numNodes*(numNodes-1));
     }
 };
 

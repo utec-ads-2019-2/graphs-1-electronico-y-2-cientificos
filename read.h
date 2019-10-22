@@ -12,10 +12,10 @@ template <typename G>
 class Read {
 	typedef typename G::N N;
 	typedef typename G::E E;
-    graph g;
+    G g;
 
 	public:
-		Read(char* file) {
+		Read(G g,char* file):g(g){
 		    ifstream data(file);
 		    Json::Value obj;
 		    Json::Reader reader;
@@ -29,9 +29,12 @@ class Read {
                 auto from=airports[i]["Id"].asString();
                 for(int j=0;j<airports[i]["destinations"].size();++j){
                     auto to=airports[i]["destinations"][j].asString();
-                    if(g.nodes.find(from)!=g.nodes.end() && g.nodes.find(to)!=g.nodes.end())
+                    if(g.nodes.find(from)!=g.nodes.end() && g.nodes.find(to)!=g.nodes.end()) {
                         g.nodes[from]->edges.push_back(g.createEdge(from,to));
-
+                        if(!g.direccionado){
+                            g.nodes[to]->edges.push_back(g.createEdge(to,from));
+                        }
+                    }
                 }
             }
 		    for(g.ni = g.nodes.begin();g.ni != g.nodes.end(); ++g.ni){
