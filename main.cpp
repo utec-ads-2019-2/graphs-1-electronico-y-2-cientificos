@@ -5,7 +5,8 @@
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     graph test;
     char file[]="airports.json";
     Read<graph> r(file);

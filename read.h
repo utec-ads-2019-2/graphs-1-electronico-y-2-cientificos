@@ -6,6 +6,7 @@
 #include <jsoncpp/json/json.h>
 #include "graph.h"
 
+
 using namespace std;
 
 template <typename G>

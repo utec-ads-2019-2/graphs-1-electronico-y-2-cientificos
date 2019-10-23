@@ -48,6 +48,64 @@ public:
         auto newEdge = new edge(nodes[name_from],nodes[name_to]);
         return newEdge;
     }
+
+    bool removeNode(N name) {
+        bool flag = false;
+        NodeIte tempIte;
+
+        if(nodes.size()<=0) return false;
+        else
+        {
+            for (ni = nodes.begin(); ni != nodes.end() ; ni++)
+            {
+                for (ei = (*ni)->edges.begin() ;  ei != (*ni)->edges.end(); ei++)
+                {
+                    if((*ei)->nodes[1]->getData() == name)
+                    {
+                        (*ni)->edges.erase(ei);
+                        break;
+                    }
+                }
+                if((*ni)->getData() == name)
+                {
+                    flag = true;
+                    tempIte = ni;
+                }
+            }
+            if(!flag)
+                return false;
+            nodes.erase(tempIte);
+            mapa.erase(tempIte);
+            return true;
+        }
+    }
+
+
+    bool removeEdge(N orig, N dest)
+    {
+        bool flag = false;
+
+        if(nodes.size()>0)
+        {
+            for (ni = nodes.begin(); ni != nodes.end(); ni++)
+            {
+                for (ei = (*ni)->edges.begin() ;  ei != (*ni)->edges.end(); ei++)
+                {
+                    if((*ei)->nodes[0]->getData() == orig && (*ei)->nodes[1]->getData() == dest)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if(flag == true) break;
+            }
+            if(!flag)
+                return false;
+            (*ni)->edges.erase(ei);
+            return true;
+        }
+        return false;
+    }
 };
 
 typedef Graph<Traits> graph;
