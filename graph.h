@@ -2,9 +2,10 @@
 #define GRAPH_H
 
 #include <algorithm>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 #include <list>
+#include <set>
 
 #include "node.h"
 #include "edge.h"
@@ -38,7 +39,6 @@ public:
     EdgeIte ei;
 
     Graph(bool d):direccionado(d){};
-
     bool insertNode(N name, E xAxis = 0, E yAxis = 0) {
         if(nodes.find(name)!=nodes.end()) return false;
         else {
@@ -47,9 +47,17 @@ public:
             return true;
         }
     }
-    edge* createEdge(N name_from, N name_to){
-        auto newEdge = new edge(nodes[name_from],nodes[name_to]);
-        return newEdge;
+    bool insertEdge(N name_from, N name_to){
+        if(!(nodes.find(name_from)!=nodes.end() && nodes.find(name_to)!=nodes.end())) return false;
+        for(ei=nodes[name_from]->edges.begin();ei!=nodes[name_from]->edges.end();++ei)
+            if((*ei)->nodes[1]->data==name_to) return false;
+        edge* newEdge = new edge(nodes[name_from],nodes[name_to]);
+        nodes[name_from]->edges.push_back(newEdge);
+        if(!direccionado){
+            edge* newEdge1 = new edge(nodes[name_to],nodes[name_from]);
+            nodes[name_to]->edges.push_back(newEdge1);
+        }
+        return true;
     }
     node* searchNode(N name){
         return nodes[name];
@@ -68,6 +76,31 @@ public:
             numEdges+=(*ni).second->edges.size();
         return (numEdges)/(numNodes*(numNodes-1));
     }
+    /*bool conexo(set<node*> nds,node* n){
+        if(nds.size()<nodes.size()){
+            EdgeSeq edges=n->edges;
+            for(ei=edges.begin();ei!=edges.end();++ei){
+                nds.insert((*ei)->nodes[1]);
+                conexo(nds,(*ei)->nodes[1]);
+            }
+            return false;
+        }
+        return true;
+    }
+    bool conexo(){
+        set<node*> nds;
+        EdgeSeq edges;
+        int size=nodes.size();
+        if(direccionado){
+        }else{
+            for(ni=nodes.begin();ni!=nodes.end();++ni){
+                edges=(*ni).second->edges;
+                for(ei=edges.begin();ei!=edges.end();++ei){
+                    nds.insert((*ei)->nodes[1]);
+                }
+            }
+        }
+    }*/
 };
 
 typedef Graph<Traits> graph;
