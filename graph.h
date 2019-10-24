@@ -5,7 +5,6 @@
 #include <unordered_map>
 #include <vector>
 #include <list>
-#include <set>
 
 #include "node.h"
 #include "edge.h"
@@ -76,31 +75,30 @@ public:
             numEdges+=(*ni).second->edges.size();
         return (numEdges)/(numNodes*(numNodes-1));
     }
-    /*bool conexo(set<node*> nds,node* n){
-        if(nds.size()<nodes.size()){
-            EdgeSeq edges=n->edges;
-            for(ei=edges.begin();ei!=edges.end();++ei){
-                nds.insert((*ei)->nodes[1]);
-                conexo(nds,(*ei)->nodes[1]);
+    void dfs(node* n,unordered_map<node*,bool> &visit){
+        visit[n]=1;
+        for(ei=n->edges.begin();ei!=n->edges.end();++ei){
+            if(visit[(*ei)->nodes[1]]){
+                dfs((*ei)->nodes[1],visit);
             }
-            return false;
+        }
+    }
+    void setMap(unordered_map<node*,bool> visit,int n){
+        for(ni=nodes.begin();ni!=nodes.end();++ni) visit[(*ni).second]=n;
+    }
+    bool conexo(){
+        unordered_map<node*,bool> visit;
+        setMap(visit,0);
+        for(ni=nodes.begin();ni!=nodes.end();++ni){
+            dfs((*nodes.begin()).second,visit);
+            for(auto mi=visit.begin();mi!=visit.end();++mi){
+                if(!(*mi).second) return false;
+            }
+            if(!direccionado) return true;
+            setMap(visit,0);
         }
         return true;
     }
-    bool conexo(){
-        set<node*> nds;
-        EdgeSeq edges;
-        int size=nodes.size();
-        if(direccionado){
-        }else{
-            for(ni=nodes.begin();ni!=nodes.end();++ni){
-                edges=(*ni).second->edges;
-                for(ei=edges.begin();ei!=edges.end();++ei){
-                    nds.insert((*ei)->nodes[1]);
-                }
-            }
-        }
-    }*/
 };
 
 typedef Graph<Traits> graph;
