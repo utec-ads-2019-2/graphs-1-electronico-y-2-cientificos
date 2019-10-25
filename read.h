@@ -15,7 +15,7 @@ class Read {
     G g;
 
 	public:
-		Read(G g,char* file):g(g){
+		Read(G &g,char* file):g(g){
 		    ifstream data(file);
 		    Json::Value obj;
 		    Json::Reader reader;
@@ -32,13 +32,21 @@ class Read {
                     g.insertEdge(from,to);
                 }
             }
+            ;/*
 		    for(g.ni = g.nodes.begin();g.ni != g.nodes.end(); ++g.ni){
 		        cout << (*g.ni).first << ' ';
 		        for(g.ei = (*g.ni).second->edges.begin(); g.ei != (*g.ni).second->edges.end(); ++g.ei){
 		            cout << (*g.ei)->nodes[1]->data << ' ';
+		            i++;
+
 		        }
 		        cout << '\n';
 		    }
+
+*/
+		    //std::cout<<k<<std::endl;
+
+		    //g.kruskal();
         }
 
 		graph& getGraph() {

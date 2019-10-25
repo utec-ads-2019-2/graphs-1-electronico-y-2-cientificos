@@ -6,10 +6,10 @@
 #include <vector>
 #include <list>
 #include <set>
-
+#include <utility>
 #include "node.h"
 #include "edge.h"
-
+#include "disjointset.h"
 using namespace std;
 
 struct Traits {
@@ -59,6 +59,7 @@ public:
         }
         return true;
     }
+
     node* searchNode(N name){
         return nodes[name];
     }
@@ -76,6 +77,47 @@ public:
             numEdges+=(*ni).second->edges.size();
         return (numEdges)/(numNodes*(numNodes-1));
     }
+
+    void kruskal(){
+        
+        multimap<E,edge> map_edge;
+        self *graph_kruskal = new self(false); 
+        disjointset<N> disjoin;
+        int k=0;
+        for(auto nodes_value : nodes){
+            disjoin[nodes_value.first] = nodes_value.first;
+            if((nodes_value.second->edges).size()==0){
+                std::cout<<nodes_value.first<<endl;
+                std::cout<<"No se conecta"<<endl;
+                
+            }
+            k++;
+            graph_kruskal->insertNode(nodes_value.second->data,nodes_value.second->get_posx(),nodes_value.second->get_posy());
+            for( auto edges_value : ((nodes_value).second)->edges){
+
+                map_edge.insert(std::make_pair<E,edge>((E)(edges_value->data),(edge)(*edges_value)));
+
+                
+            }
+        }
+        int contador=0;
+
+        for(auto valores : map_edge){
+            N a1 = disjoin.find_node_root((valores.second).nodes[0]->data);
+            N a2 = disjoin.find_node_root((valores.second).nodes[1]->data);
+
+            if(disjoin.same_root(a1,a2)==false){
+                disjoin.Union(a1,a2); 
+                contador++;
+                graph_kruskal->insertEdge((valores.second).nodes[0]->data,(valores.second).nodes[1]->data);  
+                //cout<<(valores.second).nodes[0]->data<<" "<<(valores.second).nodes[1]->data<<endl;    
+            }
+
+        }
+        std::cout<<contador<<" "<<k<<std::endl;
+
+    }
+
     /*bool conexo(set<node*> nds,node* n){
         if(nds.size()<nodes.size()){
             EdgeSeq edges=n->edges;
@@ -85,7 +127,7 @@ public:
             }
             return false;
         }
-        return true;
+`        return true;
     }
     bool conexo(){
         set<node*> nds;

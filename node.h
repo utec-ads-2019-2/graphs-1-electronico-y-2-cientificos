@@ -13,6 +13,8 @@ public:
 public:
     Node(N data):data(data){};
     Node(N data, double x, double y):data(data),x(x),y(y){};
+    double get_posx(){return x;}
+    double get_posy(){return y;}
 };
 
 #endif
