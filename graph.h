@@ -77,16 +77,16 @@ public:
     }
     void dfs(node* n,unordered_map<node*,bool> &visit){
         visit[n]=1;
-        for(ei=n->edges.begin();ei!=n->edges.end();++ei){
-            if(visit[(*ei)->nodes[1]]){
-                dfs((*ei)->nodes[1],visit);
+        for(EdgeIte it=n->edges.begin();it!=n->edges.end();++it){
+            if(!visit[(*it)->nodes[1]]){
+                dfs((*it)->nodes[1],visit);
             }
         }
     }
-    void setMap(unordered_map<node*,bool> visit,int n){
-        for(ni=nodes.begin();ni!=nodes.end();++ni) visit[(*ni).second]=n;
+    void setMap(unordered_map<node*,bool> visit,bool n){
+        for(NodeIte it=nodes.begin();it!=nodes.end();++it) visit[(*it).second]=n;
     }
-    bool conexo(){
+    bool isConnected(){
         unordered_map<node*,bool> visit;
         setMap(visit,0);
         for(ni=nodes.begin();ni!=nodes.end();++ni){
