@@ -122,85 +122,35 @@ public:
         multimap<E,edge> map_edge;
         self *graph_kruskal = new self(false); 
         disjointset<N> disjoin;
-        int k=0;
+
         for(auto nodes_value : nodes){
             disjoin[nodes_value.first] = nodes_value.first;
-            if((nodes_value.second->edges).size()==0){
-                std::cout<<nodes_value.first<<endl;
-                std::cout<<"No se conecta"<<endl;
-                
-            }
+
             graph_kruskal->insertNode(nodes_value.second->data,nodes_value.second->get_posx(),nodes_value.second->get_posy());
             for( auto edges_value : ((nodes_value).second)->edges){
 
-                map_edge.insert(std::make_pair<E,edge>((E)(edges_value->data),(edge)(*edges_value)));
-
-                
+                map_edge.insert(make_pair<E,edge>((E)(edges_value->data),(edge)(*edges_value)));
+            
             }
         }
-        int contador=0;
 
         for(auto valores : map_edge){
             N a1 = disjoin.find_node_root((valores.second).nodes[0]->data);
             N a2 = disjoin.find_node_root((valores.second).nodes[1]->data);
 
-            if(disjoin.same_root(a1,a2)==false){
+            if(disjoin.same_root((valores.second).nodes[0]->data,(valores.second).nodes[1]->data)==false){
                 disjoin.Union(a1,a2); 
-                //contador++;
+
                 graph_kruskal->insertEdge((valores.second).nodes[0]->data,(valores.second).nodes[1]->data);  
-                
-                //cout<<(valores.second).nodes[0]->data<<" "<<(valores.second).nodes[1]->data<<endl;    
+  
             }
 
         }
-
-        for(auto nodes_value : graph_kruskal->nodes){
-            k++;
-            if((nodes_value.second->edges).size()==0){
-                std::cout<<nodes_value.first<<endl;
-            }
-            for(auto edges_value : ((nodes_value).second)->edges){
-                contador++;
-
-            }
-        }
-
-        std::cout<<contador/2<<" "<<k<<std::endl;
 
         return *graph_kruskal;
-        
 
     }
 
-
-
-
-
-    /*bool conexo(set<node*> nds,node* n){
-        if(nds.size()<nodes.size()){
-            EdgeSeq edges=n->edges;
-            for(ei=edges.begin();ei!=edges.end();++ei){
-                nds.insert((*ei)->nodes[1]);
-                conexo(nds,(*ei)->nodes[1]);
-            }
-            return false;
-        }
-`        return true;
-    }
-    bool conexo(){
-        set<node*> nds;
-        EdgeSeq edges;
-        int size=nodes.size();
-        if(direccionado){
-        }else{
-            for(ni=nodes.begin();ni!=nodes.end();++ni){
-                edges=(*ni).second->edges;
-                for(ei=edges.begin();ei!=edges.end();++ei){
-                    nds.insert((*ei)->nodes[1]);
-                }
-            }
-        }
-    }*/
 };
 
 typedef Graph<Traits> graph;
