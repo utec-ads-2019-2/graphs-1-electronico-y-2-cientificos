@@ -5,8 +5,10 @@
 #include <unordered_map>
 #include <vector>
 #include <list>
+
 #include <set>
 #include <utility>
+
 #include "node.h"
 #include "edge.h"
 #include "disjointset.h"
@@ -79,7 +81,6 @@ public:
         return (numEdges)/(numNodes*(numNodes-1));
     }
 
-
     bool bipartito(){
         
         queue<node*> Priority_queue;
@@ -130,7 +131,6 @@ public:
             for( auto edges_value : ((nodes_value).second)->edges){
 
                 map_edge.insert(make_pair<E,edge>((E)(edges_value->data),(edge)(*edges_value)));
-            
             }
         }
 
@@ -151,6 +151,32 @@ public:
 
     }
 
+    void dfs(node* n,unordered_map<node*,bool> &visit){
+        visit[n]=1;
+        for(EdgeIte it=n->edges.begin();it!=n->edges.end();++it){
+            if(!visit[(*it)->nodes[1]]){
+                dfs((*it)->nodes[1],visit);
+            }
+        }
+    }
+    void setMap(unordered_map<node*,bool> visit,bool n){
+        for(NodeIte it=nodes.begin();it!=nodes.end();++it) visit[(*it).second]=n;
+    }
+    bool isConnected(){
+        unordered_map<node*,bool> visit;
+        setMap(visit,0);
+        for(ni=nodes.begin();ni!=nodes.end();++ni){
+            dfs((*nodes.begin()).second,visit);
+            for(auto mi=visit.begin();mi!=visit.end();++mi){
+                if(!(*mi).second) return false;
+
+            }
+            if(!direccionado) return true;
+            setMap(visit,0);
+        }
+
+        return true;
+    }
 };
 
 typedef Graph<Traits> graph;

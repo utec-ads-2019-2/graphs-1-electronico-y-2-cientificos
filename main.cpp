@@ -12,5 +12,6 @@ int main(int argc, char *argv[]) {
    	graph afterKruskal = test.kruskal();
    	if(test.bipartito()){cout<<"es bipartito"<<endl;}
    	else{cout<<"no es bipartito"<<endl;}
+   	cout<<test.isConnected()<<endl;
     return EXIT_SUCCESS;
 }
