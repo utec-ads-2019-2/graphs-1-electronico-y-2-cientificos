@@ -35,6 +35,7 @@ public:
     NodeSeq nodes;
     NodeIte ni;
     EdgeIte ei;
+    EdgeSeq edges;
 
     bool insertNode(N name, E xAxis = 0, E yAxis = 0) {
         if(nodes.find(name)!=nodes.end()) return false;
@@ -75,7 +76,6 @@ public:
             if(!flag)
                 return false;
             nodes.erase(tempIte);
-            mapa.erase(tempIte);
             return true;
         }
     }
@@ -97,7 +97,7 @@ public:
                         break;
                     }
                 }
-                if(flag == true) break;
+                if(flag) break;
             }
             if(!flag)
                 return false;
@@ -106,6 +106,7 @@ public:
         }
         return false;
     }
+
 };
 
 typedef Graph<Traits> graph;
