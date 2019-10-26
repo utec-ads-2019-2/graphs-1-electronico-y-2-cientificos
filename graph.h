@@ -36,16 +36,11 @@ public:
     NodeSeq nodes;
     NodeIte ni;
     EdgeIte ei;
-    EdgeSeq edges;
-
     bool directed = false;
     bool weighted = false;
 
     Graph() = default;
-    explicit Graph(string);
     explicit Graph(bool directed) : directed(directed) {};
-    Graph(bool directed, bool weighted) : directed(directed), weighted(weighted) {};
-
     bool findNode(N name){
         return nodes.find(name) != nodes.end();
     }
@@ -60,10 +55,14 @@ public:
         }
         return false;
     }
-
     void insertNode(N name){
         node* newNode = new node(name);
         nodes[name] = newNode;
+    }
+    void insertNode(node* prevNode)
+    {
+        node* newNode = new node(prevNode);
+        nodes[prevNode->data]= newNode;
     }
     bool insertNode(N name, E xAxis = 0, E yAxis = 0) {
         if(nodes.find(name)!=nodes.end()) return false;
@@ -134,11 +133,10 @@ public:
         }
         return false;
     }
-    Graph<Tr>* primMST(N start){
+    self& primMST(N start){
         unordered_map<N, N> parent;
         unordered_map<N, bool> vis;
         unordered_map<N, E> weight;
-
         priority_queue<pair<E, N>, vector<pair<E, N>>, greater<pair<E, N>>> pq;
 
         self* MST = new self(false, weighted);
@@ -157,7 +155,7 @@ public:
                 MST->insertNode(nodes[curr]);
             }
             if(parent[curr] != curr){
-                MST->addEdge(parent[curr], curr, weig);// TODO
+                MST->insertEdge(parent[curr], curr);
             }
 
             for(edge* edg : nodes[curr]->edges){

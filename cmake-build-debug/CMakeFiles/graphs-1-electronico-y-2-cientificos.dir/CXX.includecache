@@ -19,6 +19,8 @@ unordered_map
 -
 list
 -
+queue
+-
 node.h
 /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/node.h
 edge.h
@@ -26,11 +28,13 @@ edge.h
 
 /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/main.cpp
 iostream
--
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/iostream
 read.h
 /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/read.h
 graph.h
 /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/graph.h
+edge.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/edge.h
 
 /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/node.h
 
