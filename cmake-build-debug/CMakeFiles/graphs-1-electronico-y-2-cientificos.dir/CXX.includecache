@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/edge.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/edge.h
 cmath
 -
 
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/graph.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/graph.h
 algorithm
 -
 vector
@@ -20,21 +20,21 @@ unordered_map
 list
 -
 node.h
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/node.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/node.h
 edge.h
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/edge.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/edge.h
 
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/main.cpp
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/main.cpp
 iostream
 -
 read.h
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/read.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/read.h
 graph.h
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/graph.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/graph.h
 
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/node.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/node.h
 
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/read.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/read.h
 fstream
 -
 string
@@ -42,5 +42,5 @@ string
 jsoncpp/json/json.h
 -
 graph.h
-C:/Users/albin/Desktop/Documents/GitHub/ALGORITMOS/PROYECTO/graphs-1-electronico-y-2-cientificos/graph.h
+/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/graph.h
 

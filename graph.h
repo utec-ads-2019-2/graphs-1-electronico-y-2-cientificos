@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <list>
+#include <queue>
 
 #include "node.h"
 #include "edge.h"
@@ -37,6 +38,33 @@ public:
     EdgeIte ei;
     EdgeSeq edges;
 
+    bool directed = false;
+    bool weighted = false;
+
+    Graph() = default;
+    explicit Graph(string);
+    explicit Graph(bool directed) : directed(directed) {};
+    Graph(bool directed, bool weighted) : directed(directed), weighted(weighted) {};
+
+    bool findNode(N name){
+        return nodes.find(name) != nodes.end();
+    }
+
+    bool findEdge(N a, N b){
+        return findEdge(nodes[a], nodes[b]);
+    }
+
+    bool findEdge(node *node1, node *node2){
+        for(edge* edg : node1->edges){
+            if(edg->nodes[1] == node2) return true;
+        }
+        return false;
+    }
+
+    void insertNode(N name){
+        node* newNode = new node(name);
+        nodes[name] = newNode;
+    }
     bool insertNode(N name, E xAxis = 0, E yAxis = 0) {
         if(nodes.find(name)!=nodes.end()) return false;
         else {
@@ -106,6 +134,47 @@ public:
         }
         return false;
     }
+    Graph<Tr>* primMST(N start){
+        unordered_map<N, N> parent;
+        unordered_map<N, bool> vis;
+        unordered_map<N, E> weight;
+
+        priority_queue<pair<E, N>, vector<pair<E, N>>, greater<pair<E, N>>> pq;
+
+        self* MST = new self(false, weighted);
+
+        pq.push(make_pair(0, start));
+        parent[start] = start;
+        while(!pq.empty()){
+            N curr = pq.top().second;
+            E weig = pq.top().first;
+            pq.pop();
+
+            if(vis[curr]) continue;
+            vis[curr] = true;
+
+            if(MST->nodes.find(curr) == MST->nodes.end()){
+                MST->insertNode(nodes[curr]);
+            }
+            if(parent[curr] != curr){
+                MST->addEdge(parent[curr], curr, weig);// TODO
+            }
+
+            for(edge* edg : nodes[curr]->edges){
+                int nd = edg->nodes[1]->data;
+                int w = edg->getData();
+                if(vis[nd]) continue;
+                if(weight.find(nd) == weight.end() || weight[nd] < w){
+                    parent[nd] = curr;
+                    weight[nd] = w;
+                    pq.push(make_pair(w, nd));
+                }
+            }
+        }
+
+        return MST;
+    }
+
 
 };
 
