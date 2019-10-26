@@ -4,13 +4,13 @@
 #include "edge.h"
 using namespace std;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     graph test(false);
     char file[]="airports.json";
-    Read<graph> r(test, file);
-    graph afterPrim =test.primMST("Cherry Capital Airport");
-
-
+    Read<graph> r(test,file);
+   	graph afterKruskal = test.kruskal();
+   	if(test.bipartito()){cout<<"es bipartito"<<endl;}
+   	else{cout<<"no es bipartito"<<endl;}
+   	cout<<test.isConnected()<<endl;
     return EXIT_SUCCESS;
 }
