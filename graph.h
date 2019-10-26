@@ -37,7 +37,6 @@ public:
     NodeIte ni;
     EdgeIte ei;
     bool directed = false;
-    bool weighted = false;
 
     Graph() = default;
     explicit Graph(bool directed) : directed(directed) {};
@@ -139,7 +138,7 @@ public:
         unordered_map<N, E> weight;
         priority_queue<pair<E, N>, vector<pair<E, N>>, greater<pair<E, N>>> pq;
 
-        self* MST = new self(false, weighted);
+        self* MST = new self(false);
 
         pq.push(make_pair(0, start));
         parent[start] = start;

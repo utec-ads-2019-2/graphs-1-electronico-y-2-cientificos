@@ -16,10 +16,10 @@ public:
     N getData() {return data;}
     void setData(N newData) {data = newData;}
 
-    double getX(){return x;}
+    double get_posx(){return x;}
     void setX(double X){x = X;}
 
-    double getY(){return y;}
+    double get_posy(){return y;}
     void setY(double Y){y = Y;}
 
 };
