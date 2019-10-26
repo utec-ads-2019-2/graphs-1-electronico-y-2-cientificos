@@ -19,7 +19,6 @@ public:
 			node1 = disjoint_map[node1];
 		}
 		return node1;
-
 	}
 
 	void Union(T node1, T node2){
