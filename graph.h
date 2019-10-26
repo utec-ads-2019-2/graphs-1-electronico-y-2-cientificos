@@ -10,6 +10,7 @@
 #include "node.h"
 #include "edge.h"
 #include "disjointset.h"
+#include <queue>
 using namespace std;
 
 struct Traits {
@@ -78,7 +79,45 @@ public:
         return (numEdges)/(numNodes*(numNodes-1));
     }
 
-    void kruskal(){
+
+    bool bipartito(){
+        
+        queue<node*> Priority_queue;
+        if(nodes.size()>0){
+            node *temporal = nullptr;
+            map<node*,int> map_bipartito;
+            NodeIte iteMap = nodes.begin();
+            Priority_queue.push(iteMap->second);
+            map_bipartito[iteMap->second] = 1;
+            while(Priority_queue.size()>0){
+                temporal = Priority_queue.front();
+                Priority_queue.pop();
+                if(map_bipartito[temporal]==1){              
+                    for(edge* valor : temporal->edges){
+                        if(map_bipartito[valor->nodes[1]]==1){return false;}
+                        if(map_bipartito[valor->nodes[1]]==2){continue;}
+                        map_bipartito[valor->nodes[1]]=2;
+                        Priority_queue.push(valor->nodes[1]);
+                    }
+                }
+                else if(map_bipartito[temporal]==2){
+                    for(edge* valor : temporal->edges){
+                        if(map_bipartito[valor->nodes[1]]==2){return false;}
+                        if(map_bipartito[valor->nodes[1]]==1){continue;}
+                        map_bipartito[valor->nodes[1]]=1;
+                        Priority_queue.push(valor->nodes[1]);
+                    }
+                }
+                
+                
+            }   
+            return true;
+        }
+        
+    }
+
+
+    self& kruskal(){
         
         multimap<E,edge> map_edge;
         self *graph_kruskal = new self(false); 
@@ -91,7 +130,6 @@ public:
                 std::cout<<"No se conecta"<<endl;
                 
             }
-            k++;
             graph_kruskal->insertNode(nodes_value.second->data,nodes_value.second->get_posx(),nodes_value.second->get_posy());
             for( auto edges_value : ((nodes_value).second)->edges){
 
@@ -108,15 +146,35 @@ public:
 
             if(disjoin.same_root(a1,a2)==false){
                 disjoin.Union(a1,a2); 
-                contador++;
+                //contador++;
                 graph_kruskal->insertEdge((valores.second).nodes[0]->data,(valores.second).nodes[1]->data);  
+                
                 //cout<<(valores.second).nodes[0]->data<<" "<<(valores.second).nodes[1]->data<<endl;    
             }
 
         }
-        std::cout<<contador<<" "<<k<<std::endl;
+
+        for(auto nodes_value : graph_kruskal->nodes){
+            k++;
+            if((nodes_value.second->edges).size()==0){
+                std::cout<<nodes_value.first<<endl;
+            }
+            for(auto edges_value : ((nodes_value).second)->edges){
+                contador++;
+
+            }
+        }
+
+        std::cout<<contador/2<<" "<<k<<std::endl;
+
+        return *graph_kruskal;
+        
 
     }
+
+
+
+
 
     /*bool conexo(set<node*> nds,node* n){
         if(nds.size()<nodes.size()){
