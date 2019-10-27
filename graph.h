@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
+#include <stack>
 #include <list>
 
 #include <set>
@@ -23,7 +24,6 @@ struct Traits {
 template <typename Tr>
 class Graph {
 public:
-    bool direccionado;
     typedef Graph<Tr> self;
     typedef Node<self> node;
     typedef Edge<self> edge;
@@ -40,11 +40,12 @@ public:
     NodeSeq nodes;
     NodeIte ni;
     EdgeIte ei;
-    bool directed = false;
+    bool direccionado = false;
 
 
     Graph() = default;
     Graph(bool d):direccionado(d){};
+
     bool findNode(N name){
         return nodes.find(name) != nodes.end();
     }
@@ -59,16 +60,16 @@ public:
         }
         return false;
     }
+
     void insertNode(N name){
         node* newNode = new node(name);
         nodes[name] = newNode;
     }
-    void insertNode(node* prevNode)
-    {
+
+    void insertNode(node* prevNode){
         node* newNode = new node(prevNode);
         nodes[prevNode->data]= newNode;
     }
-
 
     bool insertNode(N name, E xAxis = 0, E yAxis = 0) {
         if(nodes.find(name)!=nodes.end()) return false;
@@ -78,6 +79,7 @@ public:
             return true;
         }
     }
+
     bool insertEdge(N name_from, N name_to){
         if(!(nodes.find(name_from)!=nodes.end() && nodes.find(name_to)!=nodes.end())) return false;
         for(ei=nodes[name_from]->edges.begin();ei!=nodes[name_from]->edges.end();++ei)
@@ -94,6 +96,7 @@ public:
     node* searchNode(N name){
         return nodes[name];
     }
+
     edge* searchEdge(N name_from, N name_to){
         EdgeSeq e = nodes[name_from]->edges;
         node* n = nodes[name_to];
@@ -101,12 +104,25 @@ public:
             if((*ei)->nodes[1]==n) return *ei;
         }
     }
+
     E graphDensity(){
         E numEdges=0;
         E numNodes=nodes.size();
         for(ni=nodes.begin();ni!=nodes.end();++ni)
             numEdges+=(*ni).second->edges.size();
         return (numEdges)/(numNodes*(numNodes-1));
+    }
+
+    Graph<Tr> transpose(){
+        Graph<Tr> newGraph(direccionado);
+        for(ni=nodes.begin();ni!=nodes.end();++ni)
+            newGraph.insertNode((*ni).second->data,(*ni).second->x,(*ni).second->y);
+        for(ni=nodes.begin();ni!=nodes.end();++ni)
+            for(ei=(*ni).second->edges.begin();ei!=(*ni).second->edges.end();++ei){
+                edge* e=new edge((*ei)->nodes[1],(*ei)->nodes[0]);
+                nodes[(*ei)->nodes[1]->data]->edges.push_back(e);
+            }
+        return newGraph;
     }
 
     bool bipartito(){
@@ -174,11 +190,15 @@ public:
 
     void dfs(node* n,unordered_map<node*,bool> &visit){
         visit[n]=1;
-        for(EdgeIte it=n->edges.begin();it!=n->edges.end();++it){
-            if(!visit[(*it)->nodes[1]]){
-                dfs((*it)->nodes[1],visit);
-            }
-        }
+        for(EdgeIte it=n->edges.begin();it!=n->edges.end();++it)
+            if(!visit[(*it)->nodes[1]]) dfs((*it)->nodes[1],visit);
+    }
+
+    void fillOrder(node* n,unordered_map<node*,bool> &visit,stack<node*> &s){
+        visit[n]=1;
+        for(EdgeIte it=n->edges.begin();it!=n->edges.end();++it)
+            if(!visit[(*it)->nodes[1]]) fillOrder((*it)->nodes[1],visit,s);
+        s.push(n);
     }
 
     void setMap(unordered_map<node*,bool> visit,bool n){
@@ -188,19 +208,24 @@ public:
     bool isConnected(){
         unordered_map<node*,bool> visit;
         setMap(visit,0);
-        for(ni=nodes.begin();ni!=nodes.end();++ni){
-            dfs((*nodes.begin()).second,visit);
-            for(auto mi=visit.begin();mi!=visit.end();++mi){
-                if(!(*mi).second) return false;
-
+        if(!direccionado) dfs((*nodes.begin()).second,visit);
+        else{
+            stack<node*> s;
+            for(auto nni=nodes.begin();nni!=nodes.end();++nni){
+                if(!visit[(*nni).second]) fillOrder((*nni).second,visit,s);
             }
-            if(!direccionado) return true;
+            Graph g1=transpose();
             setMap(visit,0);
+            node* n=s.top(); s.pop();
+            if(!visit[n]) g1.dfs((*g1.nodes.begin()).second,visit);
+        }
+        for(auto mi=visit.begin();mi!=visit.end();++mi){
+            if(!(*mi).second) return false;
         }
         return true;
     }
 
-    bool removeNode(N name) {
+    bool removeNode(N name){
         bool flag = false;
         NodeIte tempIte;
 
@@ -230,8 +255,7 @@ public:
         }
     }
 
-    bool removeEdge(N orig, N dest)
-    {
+    bool removeEdge(N orig, N dest){
         bool flag = false;
 
         if(nodes.size()>0)
@@ -292,7 +316,6 @@ public:
                 }
             }
         }
-
         return MST;
     }
 

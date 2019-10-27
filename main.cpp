@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    graph test(false);
+    graph test(true);
     char file[]="airports.json";
     Read<graph> r(test,file);
    	graph afterKruskal = test.kruskal();

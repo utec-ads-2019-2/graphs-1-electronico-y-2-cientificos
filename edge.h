@@ -12,7 +12,6 @@ public:
     E data;
     node* nodes[2];
 
-
     Edge(node* from, node* to){
         nodes[0]=from;
         nodes[1]=to;
