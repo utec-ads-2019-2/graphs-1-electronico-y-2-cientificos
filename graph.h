@@ -100,12 +100,13 @@ public:
 
     edge* searchEdge(N name_from, N name_to){
         if(nodes.empty()) return nullptr;
-        EdgeSeq e = nodes[name_from]->edges;
-        if(e.empty()) return nullptr;
+        EdgeSeq* e = &(nodes[name_from]->edges);
+        if(e->empty()) return nullptr;
         node* n = nodes[name_to];
-        for(ei=e.begin();ei!=e.end();++ei){
+        for(ei=e->begin();ei!=e->end();++ei){
             if((*ei)->nodes[1]==n) return *ei;
         }
+        return nullptr;
     }
 
     E graphDensity(){
@@ -123,7 +124,7 @@ public:
         for(ni=nodes.begin();ni!=nodes.end();++ni)
             for(ei=(*ni).second->edges.begin();ei!=(*ni).second->edges.end();++ei){
                 edge* e=new edge((*ei)->nodes[1],(*ei)->nodes[0]);
-                nodes[(*ei)->nodes[1]->data]->edges.push_back(e);
+                newGraph.nodes[(*ei)->nodes[1]->data]->edges.push_back(e);
             }
         return newGraph;
     }
@@ -229,55 +230,25 @@ public:
     }
 
     bool removeNode(N name){
-        bool flag = false;
-        NodeIte tempIte;
-
-        if(nodes.size()<=0) return false;
-        else
-        {
-            for (ni = nodes.begin(); ni != nodes.end() ; ni++)
-            {
-                for (ei = (*ni)->edges.begin() ;  ei != (*ni)->edges.end(); ei++)
-                {
-                    if((*ei)->nodes[1]->getData() == name)
-                    {
-                        (*ni)->edges.erase(ei);
-                        break;
-                    }
-                }
-                if((*ni)->getData() == name)
-                {
-                    flag = true;
-                    tempIte = ni;
-                }
-            }
-            if(!flag)
-                return false;
-            nodes.erase(tempIte);
-            return true;
-        }
+        NodeIte ndIt = nodes.find(name);
+        if(ndIt==nodes.end()) return false;
+        (*ndIt).second->edges.clear();
+        if(direccionado)
+            for (ni=nodes.begin();ni!=nodes.end();ni++)
+                if(ni!=ndIt)
+                    for (ei=(*ni).second->edges.begin();ei!=(*ni).second->edges.end();ei++)
+                        if((*ei)->nodes[1]->data==name)
+                            removeEdge((*ei)->nodes[1]->data,(*ndIt).second->data);
+        nodes.erase(ndIt);
+        return true;
     }
 
-    bool removeEdge(N orig, N dest){
-        bool flag = false;
-
-        if(nodes.size()>0)
-        {
-            for (ni = nodes.begin(); ni != nodes.end(); ni++)
-            {
-                for (ei = (*ni)->edges.begin() ;  ei != (*ni)->edges.end(); ei++)
-                {
-                    if((*ei)->nodes[0]->getData() == orig && (*ei)->nodes[1]->getData() == dest)
-                    {
-                        flag = true;
-                        break;
-                    }
-                }
-                if(flag) break;
-            }
-            if(!flag)
-                return false;
-            (*ni)->edges.erase(ei);
+    bool removeEdge(N from, N to){
+        if(!(nodes.find(from)!=nodes.end() && nodes.find(to)!=nodes.end())) return false;
+        edge* f=searchEdge(from,to);
+        if(f){
+            nodes[from]->edges.remove(f);
+            if(!direccionado) nodes[to]->edges.remove(searchEdge(to,from));
             return true;
         }
         return false;
