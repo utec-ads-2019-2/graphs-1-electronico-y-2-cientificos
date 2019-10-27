@@ -94,11 +94,14 @@ public:
     }
 
     node* searchNode(N name){
+        if(nodes.empty()) return nullptr;
         return nodes[name];
     }
 
     edge* searchEdge(N name_from, N name_to){
+        if(nodes.empty()) return nullptr;
         EdgeSeq e = nodes[name_from]->edges;
+        if(e.empty()) return nullptr;
         node* n = nodes[name_to];
         for(ei=e.begin();ei!=e.end();++ei){
             if((*ei)->nodes[1]==n) return *ei;
