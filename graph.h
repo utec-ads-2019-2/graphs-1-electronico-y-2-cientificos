@@ -205,13 +205,14 @@ public:
         s.push(n);
     }
 
-    void setMap(unordered_map<node*,bool> visit,bool n){
+    void setMap(unordered_map<node*,bool> &visit,bool n){
         for(NodeIte it=nodes.begin();it!=nodes.end();++it) visit[(*it).second]=n;
     }
 
     bool isConnected(){
         unordered_map<node*,bool> visit;
         setMap(visit,0);
+        cout << nodes.size() << endl;
         if(!direccionado) dfs((*nodes.begin()).second,visit);
         else{
             stack<node*> s;
