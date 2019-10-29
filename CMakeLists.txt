@@ -6,4 +6,4 @@ set(CMAKE_CXX_FLAGS -pthread)
 
 
 
-add_executable(graphs-1-electronico-y-2-cientificos main.cpp edge.h graph.h node.h read.h)
+add_executable(graphs-1-electronico-y-2-cientificos main.cpp edge.h graph.h node.h read.h tester.cpp tester.h)

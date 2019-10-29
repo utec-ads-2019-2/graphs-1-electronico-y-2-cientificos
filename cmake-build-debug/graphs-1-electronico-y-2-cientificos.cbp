@@ -99,6 +99,12 @@
 		<Unit filename="/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/read.h">
 			<Option target="graphs-1-electronico-y-2-cientificos"/>
 		</Unit>
+		<Unit filename="/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/tester.cpp">
+			<Option target="graphs-1-electronico-y-2-cientificos"/>
+		</Unit>
+		<Unit filename="/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/tester.h">
+			<Option target="graphs-1-electronico-y-2-cientificos"/>
+		</Unit>
 		<Unit filename="/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
