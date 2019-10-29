@@ -1,6 +1,6 @@
 #ifndef GRAPH_H
 #define GRAPH_H
-
+#include <iomanip>
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
@@ -45,6 +45,15 @@ public:
 
     Graph() = default;
     Graph(bool d):direccionado(d){};
+
+    void print_graph(){
+        for(NodeIte ni = nodes.begin();ni!=nodes.end();++ni){
+            cout<<"Node "<<setw(5)<<(*ni).second->get_data()<<" : "<<endl;
+            for(EdgeIte ei = (*ni).second->get_edges().begin();ei != (*ni).second->get_edges().end();++ei){
+                cout<<"          "<<setw(6)<<(*ei)->get_nodes()[1]->get_data()<<" - "<<(*ei)->get_data()<<endl;
+            }
+        }
+    }
 
     bool findNode(N name){
         return nodes.find(name) != nodes.end();
@@ -123,6 +132,7 @@ public:
         Graph<Tr> newGraph(direccionado);
         for(ni=nodes.begin();ni!=nodes.end();++ni)
             newGraph.insertNode((*ni).second->get_data(),(*ni).second->get_posx(),(*ni).second->get_posy());
+
         for(ni=nodes.begin();ni!=nodes.end();++ni)
             for(ei=(*ni).second->get_edges().begin();ei!=(*ni).second->get_edges().end();++ei){
                 edge* e=new edge((*ei)->get_nodes()[1],(*ei)->get_nodes()[0]);
@@ -167,7 +177,8 @@ public:
     }
 
     self& kruskal(){
-        if(!isConnected()) throw out_of_range("Graphs is not connected");
+        if(!isConnected()) throw out_of_range("Graph is not connected");
+        if(direccionado) throw out_of_range("Graph is not ");
         multimap<E,edge,greater<E>> map_edge;
         self *graph_kruskal = new self(false); 
         disjointset<N> disjoin;
@@ -187,24 +198,23 @@ public:
             N a2 = disjoin.find_node_root((valores->second).get_nodes()[1]->get_data());
 
             if(disjoin.same_root(a1,a2)==false){
-
                 disjoin.Union(a1,a2); 
                 graph_kruskal->insertNode((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[0]->get_posx(),((valores->second).get_nodes())[0]->get_posy());
                 graph_kruskal->insertNode((valores->second).get_nodes()[1]->get_data(),((valores->second).get_nodes())[1]->get_posx(),((valores->second).get_nodes())[1]->get_posy());         
                 graph_kruskal->insertEdge((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[1]->get_data());
             }
 
-            ++valores;
         }
 
+/*
         int k=0,contador=0;
         for(auto nodes_value : graph_kruskal->nodes){
             k++;
             contador += (nodes_value).second->get_edges().size();
         }
+        std::cout<<k<<" "<<contador/2<<endl;
 
 
-/*
         for(auto valores : map_edge){
             cout<<(valores.first)<<" - "<<(valores.second).nodes[0]->data<<" - "<<(valores.second).nodes[1]->data<<endl;
         }
@@ -213,9 +223,9 @@ public:
             std::cout<<edgees->nodes[1]->data<<" ";
         }
         //std::cout<<contador<<endl;
-*/
-        std::cout<<k<<" "<<contador/2<<endl;
 
+        
+*/
         return *graph_kruskal;
 
 
@@ -243,7 +253,7 @@ public:
     bool isConnected(){
         unordered_map<node*,bool> visit;
         setMap(visit,0);
-        cout << nodes.size() << endl;
+        //cout << nodes.size() << endl;
         if(!direccionado) dfs((*nodes.begin()).second,visit);
         else{
             stack<node*> s;
@@ -273,6 +283,9 @@ public:
         }
         return false;
     }
+
+
+
 
     self& primMST(N start){
         unordered_map<N, N> parent;

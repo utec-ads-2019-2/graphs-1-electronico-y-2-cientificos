@@ -22,7 +22,7 @@ public:
     };
 
 
-    E &	get_data(){return data;}
+    E& get_data(){return data;}
     node** get_nodes(){return nodes;}
     
     Edge(node* from, node* to, E d){
