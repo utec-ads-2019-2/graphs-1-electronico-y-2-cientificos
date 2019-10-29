@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
+#include <stack>
 #include <list>
 
 #include <set>
@@ -23,7 +24,6 @@ struct Traits {
 template <typename Tr>
 class Graph {
 public:
-    bool direccionado;
     typedef Graph<Tr> self;
     typedef Node<self> node;
     typedef Edge<self> edge;
@@ -40,8 +40,37 @@ public:
     NodeSeq nodes;
     NodeIte ni;
     EdgeIte ei;
+    bool direccionado = false;
 
+
+    Graph() = default;
     Graph(bool d):direccionado(d){};
+
+    bool findNode(N name){
+        return nodes.find(name) != nodes.end();
+    }
+
+    bool findEdge(N a, N b){
+        return findEdge(nodes[a], nodes[b]);
+    }
+
+    bool findEdge(node *node1, node *node2){
+        for(edge* edg : node1->edges){
+            if(edg->nodes[1] == node2) return true;
+        }
+        return false;
+    }
+
+    void insertNode(N name){
+        node* newNode = new node(name);
+        nodes[name] = newNode;
+    }
+
+    void insertNode(node* prevNode){
+        node* newNode = new node(prevNode);
+        nodes[prevNode->data]= newNode;
+    }
+
     bool insertNode(N name, E xAxis = 0, E yAxis = 0) {
         if(nodes.find(name)!=nodes.end()) return false;
         else {
@@ -50,6 +79,7 @@ public:
             return true;
         }
     }
+
     bool insertEdge(N name_from, N name_to){
         if(!(nodes.find(name_from)!=nodes.end() && nodes.find(name_to)!=nodes.end())) return false;
         for(ei=nodes[name_from]->get_edges().begin();ei!=nodes[name_from]->get_edges().end();++ei)
@@ -64,15 +94,23 @@ public:
     }
 
     node* searchNode(N name){
+        if(nodes.empty()) return nullptr;
         return nodes[name];
     }
+
     edge* searchEdge(N name_from, N name_to){
-        EdgeSeq e = nodes[name_from]->get_edges();
+       
+        if(nodes.empty()) return nullptr;
+        EdgeSeq* e = &(nodes[name_from]->edges);
+        if(e->empty()) return nullptr;
+
         node* n = nodes[name_to];
-        for(ei=e.begin();ei!=e.end();++ei){
+        for(ei=e->begin();ei!=e->end();++ei){
             if((*ei)->nodes[1]==n) return *ei;
         }
+        return nullptr;
     }
+
     E graphDensity(){
         E numEdges=0;
         E numNodes=nodes.size();
@@ -81,8 +119,19 @@ public:
         return (numEdges)/(numNodes*(numNodes-1));
     }
 
+    Graph<Tr> transpose(){
+        Graph<Tr> newGraph(direccionado);
+        for(ni=nodes.begin();ni!=nodes.end();++ni)
+            newGraph.insertNode((*ni).second->get_data(),(*ni).second->get_posx(),(*ni).second->get_posy());
+        for(ni=nodes.begin();ni!=nodes.end();++ni)
+            for(ei=(*ni).second->get_edges().begin();ei!=(*ni).second->get_edges().end();++ei){
+                edge* e=new edge((*ei)->get_nodes()[1],(*ei)->get_nodes()[0]);
+                newGraph.nodes[(*ei)->get_nodes()[1]->get_data()]->get_edges().push_back(e);
+            }
+        return newGraph;
+    }
+
     bool bipartito(){
-        
         queue<node*> Priority_queue;
         if(nodes.size()>0){
             node *temporal = nullptr;
@@ -93,6 +142,7 @@ public:
             while(Priority_queue.size()>0){
                 temporal = Priority_queue.front();
                 Priority_queue.pop();
+
                 if(map_bipartito[temporal]==1){              
                     for(edge* valor : temporal->get_edges()){
                         if(map_bipartito[(valor->get_nodes())[1]]==1){return false;}
@@ -101,6 +151,7 @@ public:
                         Priority_queue.push((valor->get_nodes())[1]);
                     }
                 }
+                
                 else if(map_bipartito[temporal]==2){
                     for(edge* valor : temporal->get_edges()){
                         if(map_bipartito[(valor->get_nodes())[1]]==2){return false;}
@@ -109,17 +160,14 @@ public:
                         Priority_queue.push((valor->get_nodes())[1]);
                     }
                 }
-                
-                
-            }   
+            }
             return true;
         }
-        
+	return false;
     }
 
-
     self& kruskal(){
-        
+        if(!isConnected()) throw out_of_range("Graphs is not connected");
         multimap<E,edge,greater<E>> map_edge;
         self *graph_kruskal = new self(false); 
         disjointset<N> disjoin;
@@ -167,9 +215,104 @@ public:
         //std::cout<<contador<<endl;
 */
         std::cout<<k<<" "<<contador/2<<endl;
+
         return *graph_kruskal;
 
+
+
+
     }
+
+    void dfs(node* n,unordered_map<node*,bool> &visit){
+        visit[n]=1;
+        for(EdgeIte it=n->get_edges().begin();it!=n->get_edges().end();++it)
+            if(!visit[(*it)->get_nodes()[1]]) dfs((*it)->get_nodes()[1],visit);
+    }
+
+    void fillOrder(node* n,unordered_map<node*,bool> &visit,stack<node*> &s){
+        visit[n]=1;
+        for(EdgeIte it=n->get_edges().begin();it!=n->get_edges().end();++it)
+            if(!visit[(*it)->get_nodes()[1]]) fillOrder((*it)->get_nodes()[1],visit,s);
+        s.push(n);
+    }
+
+    void setMap(unordered_map<node*,bool> &visit,bool n){
+        for(NodeIte it=nodes.begin();it!=nodes.end();++it) visit[(*it).second]=n;
+    }
+
+    bool isConnected(){
+        unordered_map<node*,bool> visit;
+        setMap(visit,0);
+        cout << nodes.size() << endl;
+        if(!direccionado) dfs((*nodes.begin()).second,visit);
+        else{
+            stack<node*> s;
+            for(auto nni=nodes.begin();nni!=nodes.end();++nni){
+                if(!visit[(*nni).second]) fillOrder((*nni).second,visit,s);
+            }
+            Graph g1=transpose();
+            setMap(visit,0);
+            node* n=s.top(); s.pop();
+            if(!visit[n]) g1.dfs((*g1.nodes.begin()).second,visit);
+        }
+        for(auto mi=visit.begin();mi!=visit.end();++mi){
+            if(!(*mi).second) return false;
+        }
+        return true;
+    }
+
+
+
+    bool removeEdge(N from, N to){
+        if(!(nodes.find(from)!=nodes.end() && nodes.find(to)!=nodes.end())) return false;
+        edge* f=searchEdge(from,to);
+        if(f){
+            nodes[from]->edges.remove(f);
+            if(!direccionado) nodes[to]->edges.remove(searchEdge(to,from));
+            return true;
+        }
+        return false;
+    }
+
+    self& primMST(N start){
+        unordered_map<N, N> parent;
+        unordered_map<N, bool> vis;
+        unordered_map<N, E> weight;
+        priority_queue<pair<E, N>, vector<pair<E, N>>, greater<pair<E, N>>> pq;
+
+        self* MST = new self(false);
+
+        pq.push(make_pair(0, start));
+        parent[start] = start;
+        while(!pq.empty()){
+            N curr = pq.top().second;
+            E weig = pq.top().first;
+            pq.pop();
+
+            if(vis[curr]) continue;
+            vis[curr] = true;
+
+            if(MST->nodes.find(curr) == MST->nodes.end()){
+                MST->insertNode(nodes[curr]);
+            }
+            if(parent[curr] != curr){
+                MST->insertEdge(parent[curr], curr);
+            }
+
+            for(edge* edg : nodes[curr]->edges){
+                int nd = edg->nodes[1]->data;
+                int w = edg->getData();
+                if(vis[nd]) continue;
+                if(weight.find(nd) == weight.end() || weight[nd] < w){
+                    parent[nd] = curr;
+                    weight[nd] = w;
+                    pq.push(make_pair(w, nd));
+                }
+            }
+        }
+        return MST;
+    }
+
 };
 
 typedef Graph<Traits> graph;
