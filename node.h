@@ -8,7 +8,7 @@ private:
     typedef typename G::EdgeSeq EdgeSeq;
 
     N data;
-    EdgeSeq edges;
+    EdgeSeq edges,edges_from;
     double x, y;
 public:
     Node(N data):data(data){};
@@ -16,6 +16,7 @@ public:
 
     N get_data(){return data;}
     EdgeSeq& get_edges(){return edges;}
+    EdgeSeq& get_edges_from(){return edges_from;}
     
     void setData(N newData) {data = newData;}
 
