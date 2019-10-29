@@ -86,9 +86,11 @@ public:
             if((*ei)->get_nodes()[1]->get_data()==name_to) return false;
         edge* newEdge = new edge(nodes[name_from],nodes[name_to]);
         nodes[name_from]->get_edges().push_back(newEdge);
+        nodes[name_to]->get_edges_from().push_back(newEdge);
         if(!direccionado){
             edge* newEdge1 = new edge(nodes[name_to],nodes[name_from]);
             nodes[name_to]->get_edges().push_back(newEdge1);
+            nodes[name_from]->get_edges_from().push_back(newEdge1);
         }
         return true;
     }
@@ -99,11 +101,9 @@ public:
     }
 
     edge* searchEdge(N name_from, N name_to){
-       
         if(nodes.empty()) return nullptr;
         EdgeSeq* e = &(nodes[name_from]->edges);
         if(e->empty()) return nullptr;
-
         node* n = nodes[name_to];
         for(ei=e->begin();ei!=e->end();++ei){
             if((*ei)->nodes[1]==n) return *ei;
@@ -142,7 +142,6 @@ public:
             while(Priority_queue.size()>0){
                 temporal = Priority_queue.front();
                 Priority_queue.pop();
-
                 if(map_bipartito[temporal]==1){              
                     for(edge* valor : temporal->get_edges()){
                         if(map_bipartito[(valor->get_nodes())[1]]==1){return false;}
@@ -151,7 +150,6 @@ public:
                         Priority_queue.push((valor->get_nodes())[1]);
                     }
                 }
-                
                 else if(map_bipartito[temporal]==2){
                     for(edge* valor : temporal->get_edges()){
                         if(map_bipartito[(valor->get_nodes())[1]]==2){return false;}
@@ -171,39 +169,28 @@ public:
         multimap<E,edge,greater<E>> map_edge;
         self *graph_kruskal = new self(false); 
         disjointset<N> disjoin;
-        
         for(auto nodes_value : nodes){
-
-            disjoin[nodes_value.first] = nodes_value.first; 
-
+            disjoin[nodes_value.first] = nodes_value.first;
             for(auto edges_value : ((nodes_value).second)->get_edges()){
                 map_edge.insert(make_pair<E,edge>((E)(edges_value->get_data()),(edge)(*edges_value)));
             }
         }
-
         for(auto valores = map_edge.begin(); valores != map_edge.end();++valores,++valores){
-
             N a1 = disjoin.find_node_root((valores->second).get_nodes()[0]->get_data());
             N a2 = disjoin.find_node_root((valores->second).get_nodes()[1]->get_data());
-
             if(disjoin.same_root(a1,a2)==false){
-
                 disjoin.Union(a1,a2); 
                 graph_kruskal->insertNode((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[0]->get_posx(),((valores->second).get_nodes())[0]->get_posy());
                 graph_kruskal->insertNode((valores->second).get_nodes()[1]->get_data(),((valores->second).get_nodes())[1]->get_posx(),((valores->second).get_nodes())[1]->get_posy());         
                 graph_kruskal->insertEdge((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[1]->get_data());
             }
-
             ++valores;
         }
-
         int k=0,contador=0;
         for(auto nodes_value : graph_kruskal->nodes){
             k++;
             contador += (nodes_value).second->get_edges().size();
         }
-
-
 /*
         for(auto valores : map_edge){
             cout<<(valores.first)<<" - "<<(valores.second).nodes[0]->data<<" - "<<(valores.second).nodes[1]->data<<endl;
@@ -215,12 +202,7 @@ public:
         //std::cout<<contador<<endl;
 */
         std::cout<<k<<" "<<contador/2<<endl;
-
         return *graph_kruskal;
-
-
-
-
     }
 
     void dfs(node* n,unordered_map<node*,bool> &visit){
@@ -261,14 +243,22 @@ public:
         return true;
     }
 
-
+    bool removeNode(N name){
+        NodeIte ndIt = nodes.find(name);
+        if(ndIt==nodes.end()) return false;
+        for(ei=(*ndIt).second->get_edges_from().begin();ei!=(*ndIt).second->get_edges_from().end();++ei){
+            nodes[(*ei)->get_nodes()[0]->get_data()]->get_edges().remove(*ei);
+        }
+        nodes.erase(ndIt);
+        return true;
+    }
 
     bool removeEdge(N from, N to){
         if(!(nodes.find(from)!=nodes.end() && nodes.find(to)!=nodes.end())) return false;
         edge* f=searchEdge(from,to);
         if(f){
-            nodes[from]->edges.remove(f);
-            if(!direccionado) nodes[to]->edges.remove(searchEdge(to,from));
+            nodes[from]->get_edges().remove(f);
+            if(!direccionado) nodes[to]->get_edges().remove(searchEdge(to,from));
             return true;
         }
         return false;
@@ -312,7 +302,6 @@ public:
         }
         return MST;
     }
-
 };
 
 typedef Graph<Traits> graph;
