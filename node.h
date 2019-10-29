@@ -3,7 +3,7 @@
 
 template <typename G>
 class Node {
-public:
+private:
     typedef typename G::N N;
     typedef typename G::EdgeSeq EdgeSeq;
 
@@ -13,6 +13,8 @@ public:
 public:
     Node(N data):data(data){};
     Node(N data, double x, double y):data(data),x(x),y(y){};
+    N get_data(){return data;}
+    EdgeSeq& get_edges(){return edges;}
     double get_posx(){return x;}
     double get_posy(){return y;}
 };
