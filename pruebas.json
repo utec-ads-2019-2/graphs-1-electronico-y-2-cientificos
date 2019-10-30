@@ -30,7 +30,7 @@
   "destinations": [
     "4",
     "2",
-    "1"
+    "4"
   ]
 },{
   "City": "Node 4",
@@ -40,7 +40,7 @@
   "Latitude": "54.910278",
   "Id": "4",
   "destinations": [
-    "1"
+    "2"
   ]
 }
 ]
