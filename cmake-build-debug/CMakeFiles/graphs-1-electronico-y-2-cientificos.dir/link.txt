@@ -1,1 +1,1 @@
-/usr/bin/c++  -pthread -g   CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o  -o graphs-1-electronico-y-2-cientificos 
+/usr/bin/c++  -pthread -g   CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o  -o graphs-1-electronico-y-2-cientificos 

@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o"
-  "CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o"
   "graphs-1-electronico-y-2-cientificos"
   "graphs-1-electronico-y-2-cientificos.pdb"
 )

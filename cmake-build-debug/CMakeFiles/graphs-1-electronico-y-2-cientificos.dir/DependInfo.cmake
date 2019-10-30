@@ -5,7 +5,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/main.cpp" "/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o"
-  "/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/tester.cpp" "/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
