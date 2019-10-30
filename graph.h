@@ -196,6 +196,10 @@ typename Graph<Tr>::node* Graph<Tr>::searchNode(N name){
 template <typename Tr>
 typename Graph<Tr>::edge* Graph<Tr>::searchEdge(N name_from, N name_to){
     if(nodes.empty()) return nullptr;
+
+
+
+typedef Graph<Traits> graph;
     EdgeSeq* e = &(nodes[name_from]->edges);
     if(e->empty()) return nullptr;
     node* n = nodes[name_to];
@@ -272,17 +276,20 @@ return false;
 
 template <typename Tr>
 Graph<Tr> & Graph<Tr>::kruskal(){
-    if(!isConnected()) throw out_of_range("Graph is not connected");
-    if(direccionado) throw out_of_range("Graph is not ");
-    multimap<E,edge,greater<E>> map_edge;
+    if(!isConnected()) throw exception();
+    if(direccionado) throw exception();
+    multimap<E,edge> map_edge;
     self *graph_kruskal = new self(false); 
     disjointset<N> disjoin;
+
+
     for(auto nodes_value : nodes){
         disjoin[nodes_value.first] = nodes_value.first;
         for(auto edges_value : ((nodes_value).second)->get_edges()){
             map_edge.insert(make_pair<E,edge>((E)(edges_value->get_data()),(edge)(*edges_value)));
         }
     }
+
     for(auto valores = map_edge.begin(); valores != map_edge.end();++valores,++valores){
         N a1 = disjoin.find_node_root((valores->second).get_nodes()[0]->get_data());
         N a2 = disjoin.find_node_root((valores->second).get_nodes()[1]->get_data());
@@ -291,6 +298,9 @@ Graph<Tr> & Graph<Tr>::kruskal(){
             graph_kruskal->insertNode((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[0]->get_posx(),((valores->second).get_nodes())[0]->get_posy());
             graph_kruskal->insertNode((valores->second).get_nodes()[1]->get_data(),((valores->second).get_nodes())[1]->get_posx(),((valores->second).get_nodes())[1]->get_posy());         
             graph_kruskal->insertEdge((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[1]->get_data());
+        }
+        if(graph_kruskal->nodes.size()==this->nodes.size()){
+            break;
         }
     }
 
@@ -387,43 +397,36 @@ bool Graph<Tr>::removeEdge(N from, N to){
 
 
 template <typename Tr>
-typename Graph<Tr>::self& Graph<Tr>::primMST(N start){/*
-    unordered_map<N, N> parent;
-    unordered_map<N, bool> vis;
-    unordered_map<N, E> weight;
-    priority_queue<pair<E, N>, vector<pair<E, N>>, greater<pair<E, N>>> pq;
+Graph<Tr> & Graph<Tr>::primMST(N source)
+{
+    if(!isConnected()) throw exception();
+    if(direccionado) throw exception();
+    vector<node*> list_of_nodes;
+    self* graphPRIM = new self(false);
+    multimap<E,edge> list_of_edges;
+    list_of_nodes.push_back(nodes[source]);
+    graphPRIM->insertNode(nodes[source]);
+    
+    while(list_of_nodes.size()!=this->nodes.size()){
+        for(auto edg : list_of_nodes[list_of_nodes.size()-1]->get_edges()){
 
-    self* MST = new self(false);
-
-    pq.push(make_pair(0, start));
-    parent[start] = start;
-    while(!pq.empty()){
-        N curr = pq.top().second;
-        E weig = pq.top().first;
-        pq.pop();
-
-        if(vis[curr]) continue;
-        vis[curr] = true;
-
-        if(MST->nodes.find(curr) == MST->nodes.end()){
-            MST->insertNode(nodes[curr]);
+            list_of_edges.insert(make_pair<E,edge>((E)edg->get_data(),(edge)*edg));
         }
-        if(parent[curr] != curr){
-            MST->insertEdge(parent[curr], curr);
-        }
+        for(auto nod = list_of_edges.begin(); nod != list_of_edges.end();nod++){
+            if(find(list_of_nodes.begin(),list_of_nodes.end(),(nod->second.get_nodes()[1]))==list_of_nodes.end()){
+                list_of_nodes.push_back(nod->second.get_nodes()[1]);
+                graphPRIM->insertNode(nod->second.get_nodes()[1]);
+                graphPRIM->insertEdge(nod->second.get_nodes()[0]->get_data(),nod->second.get_nodes()[1]->get_data());
+                cout<<nod->second.get_data()<<endl;
+                break;
 
-        for(edge* edg : nodes[curr]->edges){
-            int nd = edg->nodes[1]->data;
-            int w = edg->getData();
-            if(vis[nd]) continue;
-            if(weight.find(nd) == weight.end() || weight[nd] < w){
-                parent[nd] = curr;
-                weight[nd] = w;
-                pq.push(make_pair(w, nd));
             }
         }
+
     }
-    return MST;*/
+
+    
+    return *graphPRIM;
 }
 
 

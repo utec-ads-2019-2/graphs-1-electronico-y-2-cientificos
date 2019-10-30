@@ -3,7 +3,7 @@
 #include <iostream>
 template <typename G>
 class Node {
-private:
+public:
     typedef typename G::N N;
     typedef typename G::EdgeSeq EdgeSeq;
 
@@ -13,6 +13,8 @@ private:
 public:
     Node(N data):data(data){};
     Node(N data, double x, double y):data(data),x(x),y(y){};
+    Node(Node* node):data(node->get_data()),x(node->get_posx()),y(node->get_posy()){};
+
     ~Node(){
     	for(auto ed : edges){
     		delete ed;
