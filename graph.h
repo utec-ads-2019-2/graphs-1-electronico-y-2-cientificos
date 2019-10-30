@@ -401,6 +401,7 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
         self* MST = new self(false);
         pq.push(make_pair(0, source));
         parent[source] = source;
+
         while(!pq.empty())
         {
             N current = pq.top().second;
@@ -409,11 +410,13 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
             inMST[current] = true;
             if(MST->nodes.find(current) == MST->nodes.end())
             {
-                MST->insertNode(nodes[current]);
+                //MST->insertNode(nodes[current]);
                 if(parent[current] != current)
                 {
-                    MST->insertEdge(parent[current], current);
+                   // MST->insertEdge(parent[current], current);
+                    //graph_kruskal->insertEdge((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[1]->get_data());
                 }
+
             }
 
             for(edge* edg : nodes[current]->edges)
@@ -428,7 +431,7 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
                 }
             }
         }
-    return *MST;
+        return *MST;
     }
 
 
