@@ -1,4 +1,1 @@
-/home/alejandro/Downloads/clion-2019.2.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos
--- Configuring done
--- Generating done
--- Build files have been written to: /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug
+CMakeLists.txt not found in /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos Select CMakeLists.txt file...

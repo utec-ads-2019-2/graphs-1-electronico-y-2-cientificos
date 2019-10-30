@@ -22,18 +22,19 @@ public:
         Json::Reader reader;
         reader.parse(data, obj);
         const Json::Value &airports = obj["airports"];
-        for (int i = 0; i < airports.size(); ++i) {
+        for (unsigned int i = 0; i < airports.size(); ++i) {
             g.insertNode(airports[i]["Id"].asString(), stod(airports[i]["Longitude"].asString()),
                          stod(airports[i]["Latitude"].asString()));
         }
-        for (int i = 0; i < airports.size(); ++i) {
+        for (unsigned int i = 0; i < airports.size(); ++i) {
             auto from = airports[i]["Id"].asString();
-            for (int j = 0; j < airports[i]["destinations"].size(); ++j) {
+            for (unsigned int j = 0; j < airports[i]["destinations"].size(); ++j) {
                 auto to = airports[i]["destinations"][j].asString();
                 g.insertEdge(from, to);
             }
         }
     }
+
     graph& getGraph() {
         return g;
     }

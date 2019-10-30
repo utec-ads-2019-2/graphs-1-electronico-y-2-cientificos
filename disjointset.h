@@ -14,7 +14,7 @@ public:
 
 	T find_node_root(T node1){
 
-		while(disjoint_map[node1] != node1 ){
+		while(node1 != disjoint_map[node1] ){
 			disjoint_map[node1] = disjoint_map[disjoint_map[node1]];
 			node1 = disjoint_map[node1];
 		}
@@ -22,11 +22,14 @@ public:
 	}
 
 	void Union(T node1, T node2){
-		disjoint_map[node2] = disjoint_map[node1];
+		disjoint_map[node1] = disjoint_map[node2];
 	}
 
 	bool same_root(T node1, T node2){
-		return (find_node_root(node1) == find_node_root(node2));
+		if(find_node_root(node1) == find_node_root(node2)){
+			return true;
+		}
+		return false;
 	}
 
 };
