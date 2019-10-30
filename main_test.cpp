@@ -32,12 +32,7 @@ TEST_CASE("GIVEN A GRAPH TO GET DENSITY") {
     graph test2(false);
     char file[] = "airports.json";
     Read<graph> r(test2, file);
-    float density = test2.graph A GRAPH TO GET DENSITY") {
-    graph test2(false);
-    char file[] = "airports.json";
-    Read<graph> r(test2, file);
     float density = test2.graphDensity();
-    REQUIRE(density == test2.graphDensity();
     REQUIRE(density == test2.graphDensity());
 }
 TEST_CASE("GIVEN A GRAPH TO FIND EDGES AND NODES")

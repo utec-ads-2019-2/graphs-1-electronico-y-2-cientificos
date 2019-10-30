@@ -216,12 +216,8 @@ typename Tr::E Graph<Tr>::graphDensity(){
     E numNodes=nodes.size();
     for(ni=nodes.begin();ni!=nodes.end();++ni)
         numEdges+=(*ni).second->edges.size();
-    if(!direccionado)
-    return (2*numEdges)/(numNodes*(numNodes-1));
-    else{
         return (numEdges)/(numNodes*(numNodes-1));
     }
-}
 
 
 
