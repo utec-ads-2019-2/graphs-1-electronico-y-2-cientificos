@@ -283,13 +283,11 @@ public:
         }
         return false;
     }
-
-
-
-
     self& primMST(N source){
-        unordered_map<N, E> key;
+        if(!isConnected()) throw out_of_range("Graph is not connected");
+        if(direccionado) throw out_of_range("Graph is not ");
         unordered_map<N, N> parent;
+        unordered_map<N, E> key;
         unordered_map<N, bool> inMST;
         priority_queue<pair<E, N>, vector<pair<E, N>>, greater<pair<E, N>>> pq;
         self* MST = new self(false);
@@ -301,20 +299,16 @@ public:
             E value = pq.top().first;
             pq.pop();
             inMST[current] = true;
-            for(edge* edg : nodes[curr]->edges)
-            {
-                int j = edg->nodes[1]->data;
+            /* esto no funca
+            for(edge* edg : nodes[curr]->edges) {
+                int n = edg->nodes[1]->data;
                 int k = edg->get_data();
-                if(inMST[v] == false && key[j] > k){
-                    key[n] = k;
-                    pq.push(make_pair(k, j));
-                    parent[j] = current;
-                }
-            }
-        }
-        return MST;
-    }
+            }*/
 
+        }
+        return *MST;
+
+    }
 };
 
 typedef Graph<Traits> graph;
