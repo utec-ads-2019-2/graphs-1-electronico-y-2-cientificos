@@ -7,12 +7,15 @@ private:
     typedef typename G::N N;
     typedef typename G::EdgeSeq EdgeSeq;
 
-    N data;
+
     EdgeSeq edges;
     double x, y;
 public:
+    N data;
     Node(N data):data(data){};
     Node(N data, double x, double y):data(data),x(x),y(y){};
+    Node(Node* node):data(data),x(x),y(y){};
+
 
     N& get_data(){return data;}
     EdgeSeq& get_edges(){return edges;}

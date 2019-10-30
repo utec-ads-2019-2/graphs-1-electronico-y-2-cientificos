@@ -102,6 +102,7 @@ public:
         return true;
     }
 
+
     node* searchNode(N name){
         if(nodes.empty()) return nullptr;
         return nodes[name];
@@ -299,12 +300,22 @@ public:
             E value = pq.top().first;
             pq.pop();
             inMST[current] = true;
+            if(MST->nodes.find(current) == MST->nodes.end()){
+                MST->insertNode(nodes[current]);
+            }
             /*
-            for(edge* edg : nodes[curr]->edges) {
+            if(parent[current] != current){
+                MST->insertEdge(parent[current], current);
+            }
+
+
+            for(edge* edg : nodes[curr]->edges)
+            {
                 float n = edg->nodes[1]->data;
                 float k = edg->get_data();
             }
              */
+
 
         }
         return *MST;
