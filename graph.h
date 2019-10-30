@@ -46,7 +46,7 @@ public:
     Graph() = default;
 
     Graph(bool d):direccionado(d){};
-    
+
     ~Graph();
 
     void print_graph();
@@ -90,6 +90,7 @@ public:
     bool removeEdge(N from, N to);
 
     self& primMST(N start);
+    
 };
 
 template <typename Tr>
