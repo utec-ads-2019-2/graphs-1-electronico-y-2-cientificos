@@ -299,11 +299,12 @@ public:
             E value = pq.top().first;
             pq.pop();
             inMST[current] = true;
-            /* esto no funca
+            /*
             for(edge* edg : nodes[curr]->edges) {
-                int n = edg->nodes[1]->data;
-                int k = edg->get_data();
-            }*/
+                float n = edg->nodes[1]->data;
+                float k = edg->get_data();
+            }
+             */
 
         }
         return *MST;
