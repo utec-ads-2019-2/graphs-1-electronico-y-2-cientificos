@@ -1,3 +1,0 @@
-/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles/graphs-1-electronico-y-2-cientificos.dir
-/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles/edit_cache.dir

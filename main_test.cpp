@@ -45,11 +45,18 @@ TEST_CASE("GIVEN A GRAPH TO FIND EDGES AND NODES")
         REQUIRE(test3.findEdge("4026", "3448"));
         REQUIRE(test3.findEdge("4029", "6485"));
 }
-/*
 
 TEST_CASE("GIVEN A GRAPH TO GET A MST BY PRIM ALGORITHM ")
 {
-
+    graph test4(false);
+    char file[]="pruebas.json";
+    Read<graph> r(test4,file);
+    graph prim = test4.primMST("1");
+    REQUIRE(test4.nodes.size()==prim.nodes.size());
+    REQUIRE(prim.isConnected());
+    THEN("PRINT MST PRIM")
+    {
+        prim.print_graph();
+    };
 
 }
-*/
