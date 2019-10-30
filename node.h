@@ -1,25 +1,30 @@
 #ifndef NODE_H
 #define NODE_H
-
+#include <iostream>
 template <typename G>
 class Node {
 public:
     typedef typename G::N N;
     typedef typename G::EdgeSeq EdgeSeq;
 
-
-    EdgeSeq edges;
+    N data;
+    EdgeSeq edges,edges_from;
     double x, y;
 public:
-    N data;
     Node(N data):data(data){};
     Node(N data, double x, double y):data(data),x(x),y(y){};
     Node(Node* node):data(data),x(x),y(y){};
 
+    ~Node(){
+    	for(auto ed : edges){
+    		delete ed;
+    	}
+    	
+    }
 
     N& get_data(){return data;}
     EdgeSeq& get_edges(){return edges;}
-
+    EdgeSeq& get_edges_from(){return edges_from;}
     void setData(N newData) {data = newData;}
 
     double get_posx(){return x;}
