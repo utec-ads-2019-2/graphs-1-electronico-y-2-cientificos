@@ -3,7 +3,7 @@
 
 template <typename G>
 class Node {
-private:
+public:
     typedef typename G::N N;
     typedef typename G::EdgeSeq EdgeSeq;
 

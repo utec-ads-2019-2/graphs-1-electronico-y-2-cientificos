@@ -303,18 +303,14 @@ public:
             if(MST->nodes.find(current) == MST->nodes.end()){
                 MST->insertNode(nodes[current]);
             }
-            /*
             if(parent[current] != current){
                 MST->insertEdge(parent[current], current);
             }
-
-
-            for(edge* edg : nodes[curr]->edges)
+            for(edge* edg : nodes[current]->edges)
             {
-                float n = edg->nodes[1]->data;
-                float k = edg->get_data();
+                auto n = edg->nodes[1]->data;
+                auto k = edg->get_data();
             }
-             */
 
 
         }
