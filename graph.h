@@ -310,6 +310,12 @@ public:
             {
                 auto n = edg->nodes[1]->data;
                 auto k = edg->get_data();
+                if(inMST[n]== false  && key[n]>k)
+                {
+                    key[n]=k;
+                    parent[n]= current;
+                    pq.push(make_pair(k,n));
+                }
             }
 
 
