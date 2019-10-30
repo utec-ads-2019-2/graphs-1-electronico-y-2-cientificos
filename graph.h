@@ -398,7 +398,7 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
         unordered_map<N, E> key;
         unordered_map<N, bool> inMST;
         priority_queue<pair<E, N>, vector<pair<E, N>>, greater<pair<E, N>>> pq;
-        self* MST = new self(false);
+        self* graphPRIM = new self(false);
         pq.push(make_pair(0, source));
         parent[source] = source;
 
@@ -408,13 +408,15 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
             E value = pq.top().first;
             pq.pop();
             inMST[current] = true;
-            if(MST->nodes.find(current) == MST->nodes.end())
+            if(graphPRIM->nodes.find(current) == graphPRIM->nodes.end())
             {
-                //MST->insertNode(nodes[current]);
+                // TODO
+                //graphPRIM->insertNode(nodes[current]);
                 if(parent[current] != current)
                 {
-                   // MST->insertEdge(parent[current], current);
-                    //graph_kruskal->insertEdge((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[1]->get_data());
+                    // TODO
+                   //graphPRIM->insertEdge(parent[current], current);
+                    // EJEMPLO DE LUIS CON KRUSKAL graph_kruskal->insertEdge((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[1]->get_data());
                 }
 
             }
@@ -431,7 +433,7 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
                 }
             }
         }
-        return *MST;
+        return *graphPRIM;
     }
 
 
