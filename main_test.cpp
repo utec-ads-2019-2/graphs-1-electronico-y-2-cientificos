@@ -9,9 +9,10 @@
 TEST_CASE("GIVEN A GRAPH TO READ")
 {
     graph test(false);
-    char file[]="pruebas.json";
+    char file[]="airports.json";
     Read<graph> r(test,file);
-    test.print_graph();
+    THEN("PRINT GRAPH")
+    {test.print_graph();};
 }
 TEST_CASE("GIVE A GRAPH TO GET A MST BY KRUSKAL ALGORITHM")
 {
@@ -19,26 +20,31 @@ TEST_CASE("GIVE A GRAPH TO GET A MST BY KRUSKAL ALGORITHM")
     char file[]="pruebas.json";
     Read<graph> r(test1,file);
     graph kruskal = test1.kruskal();
-
-
-
-
+    REQUIRE(test1.nodes.size()==kruskal.nodes.size());
+    REQUIRE(kruskal.isConnected());
 }
-/*
-TEST_CASE("GIVEN A GRAPH TO GET DENSITY")
-{
-
-
+TEST_CASE("GIVEN A GRAPH TO GET DENSITY") {
+    graph test2(false);
+    char file[] = "airports.json";
+    Read<graph> r(test2, file);
+    float density = test2.graphDensity();
+    REQUIRE(density == test2.graphDensity());
 }
 TEST_CASE("GIVEN A GRAPH TO FIND EDGES AND NODES")
 {
-
-
+    graph test3(false);
+    char file[] = "airports.json";
+    Read<graph> r(test3, file);
+        REQUIRE(test3.findNode("6972"));
+        REQUIRE(test3.findNode("4027"));
+        REQUIRE(test3.findEdge("4026", "3448"));
+        REQUIRE(test3.findEdge("4029", "6485"));
 }
+/*
 
 TEST_CASE("GIVEN A GRAPH TO GET A MST BY PRIM ALGORITHM ")
 {
 
 
 }
- */
+*/
