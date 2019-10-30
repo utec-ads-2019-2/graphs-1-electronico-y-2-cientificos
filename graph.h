@@ -427,7 +427,7 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
                 {
                     key[n]=k;
                     parent[n]= current;
-                    pq.push(make_pair(current,k));
+                    pq.push(make_pair(k, current));
                 }
             }
         }
