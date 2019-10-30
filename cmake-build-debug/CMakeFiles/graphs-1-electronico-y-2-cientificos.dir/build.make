@@ -43,10 +43,10 @@ RM = /home/alejandro/Downloads/clion-2019.2.4/bin/cmake/linux/bin/cmake -E remov
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos
+CMAKE_SOURCE_DIR = /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug
+CMAKE_BINARY_DIR = /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/depend.make
@@ -59,29 +59,29 @@ include CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/flags.make
 
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o: CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/flags.make
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o -c /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.o -c /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/main.cpp
 
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/main.cpp > CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/main.cpp > CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.i
 
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/main.cpp -o CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/main.cpp -o CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/main.cpp.s
 
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o: CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/flags.make
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o: ../tester.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o -c /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/tester.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o -c /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/tester.cpp
 
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/tester.cpp > CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/tester.cpp > CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.i
 
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/tester.cpp -o CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/tester.cpp -o CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.s
 
 # Object files for target graphs-1-electronico-y-2-cientificos
 graphs__1__electronico__y__2__cientificos_OBJECTS = \
@@ -95,7 +95,7 @@ graphs-1-electronico-y-2-cientificos: CMakeFiles/graphs-1-electronico-y-2-cienti
 graphs-1-electronico-y-2-cientificos: CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/tester.cpp.o
 graphs-1-electronico-y-2-cientificos: CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/build.make
 graphs-1-electronico-y-2-cientificos: CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable graphs-1-electronico-y-2-cientificos"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable graphs-1-electronico-y-2-cientificos"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -108,6 +108,6 @@ CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/clean:
 .PHONY : CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/clean
 
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/depend:
-	cd /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/depend
 

@@ -44,10 +44,10 @@ RM = /home/alejandro/Downloads/clion-2019.2.4/bin/cmake/linux/bin/cmake -E remov
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos
+CMAKE_SOURCE_DIR = /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug
+CMAKE_BINARY_DIR = /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -74,14 +74,14 @@ preinstall:
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/all:
 	$(MAKE) -f CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/build.make CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/depend
 	$(MAKE) -f CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/build.make CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target graphs-1-electronico-y-2-cientificos"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target graphs-1-electronico-y-2-cientificos"
 .PHONY : CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alejandro/Documents/ProjectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alejandro/Documents/ProyectoAED/graphs-1-electronico-y-2-cientificos/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/graphs-1-electronico-y-2-cientificos.dir/rule
 
 # Convenience name for target.
