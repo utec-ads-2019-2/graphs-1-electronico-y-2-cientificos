@@ -287,39 +287,28 @@ public:
 
 
 
-    self& primMST(N start){
+    self& primMST(N source){
+        unordered_map<N, E> key;
         unordered_map<N, N> parent;
-        unordered_map<N, bool> vis;
-        unordered_map<N, E> weight;
+        unordered_map<N, bool> inMST;
         priority_queue<pair<E, N>, vector<pair<E, N>>, greater<pair<E, N>>> pq;
-
         self* MST = new self(false);
-
-        pq.push(make_pair(0, start));
-        parent[start] = start;
-        while(!pq.empty()){
-            N curr = pq.top().second;
-            E weig = pq.top().first;
+        pq.push(make_pair(0, source));
+        parent[source] = source;
+        while(!pq.empty())
+        {
+            N current = pq.top().second;
+            E value = pq.top().first;
             pq.pop();
-
-            if(vis[curr]) continue;
-            vis[curr] = true;
-
-            if(MST->nodes.find(curr) == MST->nodes.end()){
-                MST->insertNode(nodes[curr]);
-            }
-            if(parent[curr] != curr){
-                MST->insertEdge(parent[curr], curr);
-            }
-
-            for(edge* edg : nodes[curr]->edges){
-                int nd = edg->nodes[1]->data;
-                int w = edg->getData();
-                if(vis[nd]) continue;
-                if(weight.find(nd) == weight.end() || weight[nd] < w){
-                    parent[nd] = curr;
-                    weight[nd] = w;
-                    pq.push(make_pair(w, nd));
+            inMST[current] = true;
+            for(edge* edg : nodes[curr]->edges)
+            {
+                int j = edg->nodes[1]->data;
+                int k = edg->get_data();
+                if(inMST[v] == false && key[j] > k){
+                    key[n] = k;
+                    pq.push(make_pair(k, j));
+                    parent[j] = current;
                 }
             }
         }
