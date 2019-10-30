@@ -13,10 +13,20 @@ TEST_CASE("GIVEN A GRAPH TO READ")
     Read<graph> r(test,file);
     test.print_graph();
 }
+TEST_CASE("GIVE A GRAPH TO GET A MST BY KRUSKAL ALGORITHM")
+{
+    graph test1(false);
+    char file[]="pruebas.json";
+    Read<graph> r(test1,file);
+    graph kruskal = test1.kruskal();
+
+
+
+
+}
 /*
 TEST_CASE("GIVEN A GRAPH TO GET DENSITY")
 {
-
 
 
 }
@@ -25,12 +35,7 @@ TEST_CASE("GIVEN A GRAPH TO FIND EDGES AND NODES")
 
 
 }
-TEST_CASE("GIVE A GRAPH TO GET A MST BY KRUSKAL ALGORITHM")
-{
 
-
-
-}
 TEST_CASE("GIVEN A GRAPH TO GET A MST BY PRIM ALGORITHM ")
 {
 

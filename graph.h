@@ -410,22 +410,20 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
             inMST[current] = true;
             if(graphPRIM->nodes.find(current) == graphPRIM->nodes.end())
             {
-                // TODO
-                //graphPRIM->insertNode(nodes[current]);
-                if(parent[current] != current)
-                {
-                    // TODO
-                   //graphPRIM->insertEdge(parent[current], current);
-                    // EJEMPLO DE LUIS CON KRUSKAL graph_kruskal->insertEdge((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[1]->get_data());
-                }
+                graphPRIM->insertNode(nodes[current]);
 
             }
+            if(parent[current] != current)
+            {
+                graphPRIM->insertEdge(parent[current], current);
 
+                // EJEMPLO DE LUIS CON KRUSKAL graph_kruskal->insertEdge((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[1]->get_data());
+            }
             for(edge* edg : nodes[current]->edges)
             {
                 auto n = edg->nodes[1]->data;
                 auto k = edg->get_data();
-                if(inMST[n]== false  && key[n]<k)
+                if(inMST[n]== true && key[n]<k)
                 {
                     key[n]=k;
                     parent[n]= current;
