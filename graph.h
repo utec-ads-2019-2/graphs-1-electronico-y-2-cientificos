@@ -17,8 +17,8 @@
 using namespace std;
 
 struct Traits {
-	typedef string N;
-	typedef float E;
+    typedef string N;
+    typedef float E;
 };
 
 template <typename Tr>
@@ -377,7 +377,7 @@ bool Graph<Tr>::removeEdge(N from, N to){
 
 
 template <typename Tr>
-typename Graph<Tr>::self& Graph<Tr>::primMST(N start){
+typename Graph<Tr>::self& Graph<Tr>::primMST(N start){/*
     unordered_map<N, N> parent;
     unordered_map<N, bool> vis;
     unordered_map<N, E> weight;
@@ -413,7 +413,7 @@ typename Graph<Tr>::self& Graph<Tr>::primMST(N start){
             }
         }
     }
-    return MST;
+    return MST;*/
 }
 
 

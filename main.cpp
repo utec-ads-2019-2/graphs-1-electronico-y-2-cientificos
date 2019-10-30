@@ -6,9 +6,9 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
     graph test(false);
-    char file[]="airports.json";
+    char file[]="pruebas.json";
     Read<graph> r(test,file);
-   	//graph MSTKruskal = test.kruskal();
+    graph MSTPrim = test.primMST("Node 1");
     if(test.bipartito()){cout<<"es bipartito"<<endl;}
    	else{cout<<"no es bipartito"<<endl;}
     cout<<test.isConnected()<<endl;
