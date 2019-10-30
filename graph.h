@@ -300,12 +300,15 @@ public:
             E value = pq.top().first;
             pq.pop();
             inMST[current] = true;
-            if(MST->nodes.find(current) == MST->nodes.end()){
+            if(MST->nodes.find(current) == MST->nodes.end())
+            {
                 MST->insertNode(nodes[current]);
+                if(parent[current] != current)
+                {
+                    MST->insertEdge(parent[current], current);
+                }
             }
-            if(parent[current] != current){
-                MST->insertEdge(parent[current], current);
-            }
+
             for(edge* edg : nodes[current]->edges)
             {
                 auto n = edg->nodes[1]->data;
