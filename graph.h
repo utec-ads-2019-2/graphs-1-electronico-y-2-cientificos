@@ -44,7 +44,10 @@ public:
 
 
     Graph() = default;
+
     Graph(bool d):direccionado(d){};
+    
+    ~Graph();
 
     void print_graph();
         
@@ -89,7 +92,13 @@ public:
     self& primMST(N start);
 };
 
-
+template <typename Tr>
+Graph<Tr>::~Graph(){
+    for(auto nod : nodes){
+        delete nod.second;
+    }
+    nodes.clear();
+}
 
 
 template <typename Tr>

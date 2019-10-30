@@ -1,6 +1,6 @@
 #ifndef NODE_H
 #define NODE_H
-
+#include <iostream>
 template <typename G>
 class Node {
 private:
@@ -13,6 +13,12 @@ private:
 public:
     Node(N data):data(data){};
     Node(N data, double x, double y):data(data),x(x),y(y){};
+    ~Node(){
+    	for(auto ed : edges){
+    		delete ed;
+    	}
+    	
+    }
 
     N& get_data(){return data;}
     EdgeSeq& get_edges(){return edges;}

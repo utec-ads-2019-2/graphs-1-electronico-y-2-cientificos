@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
     graph test(false);
     char file[]="pruebas.json";
     Read<graph> r(test,file);
-    graph MSTPrim = test.primMST("Node 1");
+    //graph MSTPrim = test.primMST();
     if(test.bipartito()){cout<<"es bipartito"<<endl;}
    	else{cout<<"no es bipartito"<<endl;}
     cout<<test.isConnected()<<endl;
