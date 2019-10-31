@@ -1,9 +1,11 @@
 #ifndef NODE_H
 #define NODE_H
+
 #include <iostream>
+
 template <typename G>
 class Node {
-private:
+public:
     typedef typename G::N N;
     typedef typename G::EdgeSeq EdgeSeq;
 
@@ -13,6 +15,8 @@ private:
 public:
     Node(N data):data(data){};
     Node(N data, double x, double y):data(data),x(x),y(y){};
+    Node(Node* node):data(data),x(x),y(y){};
+
     ~Node(){
     	for(auto ed : edges){
     		delete ed;

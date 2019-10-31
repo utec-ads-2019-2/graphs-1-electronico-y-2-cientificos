@@ -9,6 +9,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="25beb64b-b17b-408f-97dc-8a956a820dd5" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/airports_for_kruskal.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edge.h" beforeDir="false" afterPath="$PROJECT_DIR$/edge.h" afterDir="false" />
@@ -17,6 +18,9 @@
       <change beforePath="$PROJECT_DIR$/node.h" beforeDir="false" afterPath="$PROJECT_DIR$/node.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pruebas.json" beforeDir="false" afterPath="$PROJECT_DIR$/pruebas.json" afterDir="false" />
     </list>
+=======
+    <list default="true" id="5a062684-4faf-406d-8ee6-36674ed56ca3" name="Default Changelist" comment="" />
+>>>>>>> 2a48a36b59ad7da11e89fb517ea6d8e17448c599
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
       <set>
@@ -40,6 +45,12 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+=======
+  <component name="ProjectId" id="1SjsVKeES9l2W71gaw97ZobYRQj" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+>>>>>>> 2a48a36b59ad7da11e89fb517ea6d8e17448c599
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -58,6 +69,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="25beb64b-b17b-408f-97dc-8a956a820dd5" name="Default Changelist" comment="" />
       <created>1572142316691</created>
       <option name="number" value="Default" />
@@ -69,6 +81,15 @@
       <workItem from="1572358571127" duration="1314000" />
       <workItem from="1572383755770" duration="2754000" />
       <workItem from="1572410271126" duration="4201000" />
+=======
+      <changelist id="5a062684-4faf-406d-8ee6-36674ed56ca3" name="Default Changelist" comment="" />
+      <created>1572088361760</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1572088361760</updated>
+      <workItem from="1572088368215" duration="13840000" />
+      <workItem from="1572356731462" duration="1495000" />
+>>>>>>> 2a48a36b59ad7da11e89fb517ea6d8e17448c599
     </task>
     <servers />
   </component>
@@ -88,4 +109,18 @@
       </map>
     </option>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.cpp</url>
+          <line>4</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+>>>>>>> 2a48a36b59ad7da11e89fb517ea6d8e17448c599
 </project>

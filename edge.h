@@ -5,7 +5,7 @@
 
 template <typename G>
 class Edge {
-
+public:
     typedef typename G::E E;
     typedef typename G::node node;
 

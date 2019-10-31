@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
+#include <queue>
 #include <stack>
 #include <list>
 
@@ -13,7 +14,6 @@
 #include "node.h"
 #include "edge.h"
 #include "disjointset.h"
-#include <queue>
 using namespace std;
 
 struct Traits {
@@ -129,8 +129,8 @@ bool Graph<Tr>::findEdge(N a, N b){
 
 template <typename Tr>
 bool Graph<Tr>::findEdge(node *node1, node *node2){
-    for(edge* edg : node1->edges){
-        if(edg->nodes[1] == node2) return true;
+    for(edge* edg : node1->get_edges()){
+        if(edg->get_nodes()[1] == node2) return true;
     }
     return false;
 }
@@ -194,11 +194,11 @@ typename Graph<Tr>::node* Graph<Tr>::searchNode(N name){
 template <typename Tr>
 typename Graph<Tr>::edge* Graph<Tr>::searchEdge(N name_from, N name_to){
     if(nodes.empty()) return nullptr;
-    EdgeSeq* e = &(nodes[name_from]->edges);
+    EdgeSeq* e = &(nodes[name_from]->get_edges());
     if(e->empty()) return nullptr;
     node* n = nodes[name_to];
     for(ei=e->begin();ei!=e->end();++ei){
-        if((*ei)->nodes[1]==n) return *ei;
+        if((*ei)->get_nodes()[1]==n) return *ei;
     }
     return nullptr;
 }
@@ -210,7 +210,7 @@ typename Tr::E Graph<Tr>::graphDensity(){
     E numEdges=0;
     E numNodes=nodes.size();
     for(ni=nodes.begin();ni!=nodes.end();++ni)
-        numEdges+=(*ni).second->edges.size();
+        numEdges+=(*ni).second->get_edges().size();
     return (numEdges)/(numNodes*(numNodes-1));
 }
 
@@ -291,17 +291,6 @@ Graph<Tr> & Graph<Tr>::kruskal(){
             graph_kruskal->insertEdge((valores->second).get_nodes()[0]->get_data(),((valores->second).get_nodes())[1]->get_data());
         }
     }
-
-/*
-    int k=0,contador=0;
-    for(auto nodes_value : graph_kruskal->nodes){
-        k++;
-        contador += (nodes_value).second->get_edges().size();
-    }
-
-    std::cout<<k<<" "<<contador/2<<endl;
-*/
-
     return *graph_kruskal;
 }
 
@@ -381,6 +370,42 @@ bool Graph<Tr>::removeEdge(N from, N to){
     return false;
 }
 
+
+
+template <typename Tr>
+Graph<Tr> & Graph<Tr>::primMST(N source){
+    if(!isConnected()) throw out_of_range("Graph is not connected");
+    if(direccionado) throw out_of_range("Graph is not ");
+    unordered_map<N, N> parent;
+    unordered_map<N, E> key;
+    unordered_map<N, bool> inMST;
+    priority_queue<pair<E, N>, vector<pair<E, N>>, greater<pair<E, N>>> pq;
+    self* MST = new self(false);
+    pq.push(make_pair(0, source));
+    parent[source] = source;
+    while(!pq.empty()){
+        N current = pq.top().second;
+        E value = pq.top().first;
+        pq.pop();
+        inMST[current] = true;
+        if(MST->nodes.find(current) == MST->nodes.end()){
+            MST->insertNode(nodes[current]);
+            if(parent[current] != current){
+                MST->insertEdge(parent[current], current);
+            }
+        }
+        for(edge* edg : nodes[current]->edges){
+            auto n = edg->nodes[1]->data;
+            auto k = edg->get_data();
+            if(inMST[n]== false  && key[n]>k){
+                key[n]=k;
+                parent[n]= current;
+                pq.push(make_pair(k,n));
+            }
+        }
+    }
+    return *MST;
+}
 
 
 typedef Graph<Traits> graph;
