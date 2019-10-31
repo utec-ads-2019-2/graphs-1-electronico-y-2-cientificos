@@ -303,17 +303,6 @@ Graph<Tr> & Graph<Tr>::kruskal(){
             break;
         }
     }
-
-/*
-    int k=0,contador=0;
-    for(auto nodes_value : graph_kruskal->nodes){
-        k++;
-        contador += (nodes_value).second->get_edges().size();
-    }
-
-    std::cout<<k<<" "<<contador/2<<endl;
-*/
-
     return *graph_kruskal;
 }
 
@@ -349,7 +338,6 @@ template <typename Tr>
 bool Graph<Tr>::isConnected(){
     unordered_map<node*,bool> visit;
     setMap(visit,0);
-    //cout << nodes.size() << endl;
     if(!direccionado) dfs((*nodes.begin()).second,visit);
     else{
         stack<node*> s;
@@ -397,8 +385,7 @@ bool Graph<Tr>::removeEdge(N from, N to){
 
 
 template <typename Tr>
-Graph<Tr> & Graph<Tr>::primMST(N source)
-{
+Graph<Tr> & Graph<Tr>::primMST(N source){
     if(!isConnected()) throw exception();
     if(direccionado) throw exception();
     vector<node*> list_of_nodes;

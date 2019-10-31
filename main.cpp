@@ -1,6 +1,6 @@
 
 #define CATCH_CONFIG_MAIN
-#include "catch.hpp"
+#include "main_test.cpp"
 #ifndef CATCH_CONFIG_MAIN
 int main()
 {
