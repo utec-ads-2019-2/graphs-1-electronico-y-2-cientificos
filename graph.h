@@ -18,7 +18,7 @@ using namespace std;
 
 struct Traits {
     typedef string N;
-    typedef float E;
+    typedef float  E;
 };
 
 template <typename Tr>
@@ -41,6 +41,8 @@ public:
     NodeIte ni;
     EdgeIte ei;
     bool direccionado = false;
+
+
 
 
     Graph() = default;
@@ -90,8 +92,24 @@ public:
     bool removeEdge(N from, N to);
 
     self& primMST(N start);
+
+    Graph<Tr>& AStar(N from, N to);
     
 };
+
+template <typename Tr>
+Graph<Tr>& Graph<Tr>::AStar(N from, N to){
+    self* graphAstar = new self(false);
+    queue<node *> Cola;
+    Cola.push(nodes[from]);
+    graphAstar->insertNode(nodes[from]);
+    while(Cola.front()!=nodes[to]){
+        
+        //cout<<"buscando"<<endl;
+    }
+    return *graphAstar;
+}
+
 
 template <typename Tr>
 Graph<Tr>::~Graph(){
@@ -196,10 +214,6 @@ typename Graph<Tr>::node* Graph<Tr>::searchNode(N name){
 template <typename Tr>
 typename Graph<Tr>::edge* Graph<Tr>::searchEdge(N name_from, N name_to){
     if(nodes.empty()) return nullptr;
-
-
-
-typedef Graph<Traits> graph;
     EdgeSeq* e = &(nodes[name_from]->edges);
     if(e->empty()) return nullptr;
     node* n = nodes[name_to];
@@ -405,7 +419,6 @@ Graph<Tr> & Graph<Tr>::primMST(N source){
                 graphPRIM->insertNode(nod->second.get_nodes()[1]);
                 graphPRIM->insertEdge(nod->second.get_nodes()[0]->get_data(),nod->second.get_nodes()[1]->get_data());
                 break;
-
             }
         }
 

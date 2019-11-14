@@ -57,6 +57,8 @@ TEST_CASE("GIVEN A GRAPH TO GET A MST BY PRIM ALGORITHM ")
     THEN("PRINT MST PRIM")
     {
         prim.print_graph();
-    };
+
+    }
+    
 
 }
