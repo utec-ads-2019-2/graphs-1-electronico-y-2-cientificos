@@ -54,12 +54,12 @@ TEST_CASE("GIVEN A GRAPH TO GET A MST BY PRIM ALGORITHM ")
     graph prim = test4.primMST("1");
     REQUIRE(test4.nodes.size()==prim.nodes.size());
     REQUIRE(prim.isConnected());
-    /*THEN("PRINT MST PRIM")
+    THEN("PRINT MST PRIM")
     {
         prim.print_graph();
-    };*/
+    };
     test4.print_graph();
-    cout << "\n\n\n";
+    /*cout << "\n\n\n";
     auto a=test4.bfs("3");
     auto b=test4.dfs("3");
     a.print_graph();
@@ -67,8 +67,6 @@ TEST_CASE("GIVEN A GRAPH TO GET A MST BY PRIM ALGORITHM ")
     b.print_graph();
     cout << '\n';
     auto d=test4.dijkstra("3");
-    d.print_graph();
+    d.print_graph();*/
     //for(auto g:d) cout << g.first->get_data() << " -> " << g.second << endl;
-
-    }
 }
