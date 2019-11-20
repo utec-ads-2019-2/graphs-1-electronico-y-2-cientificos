@@ -94,19 +94,78 @@ public:
     self& primMST(N start);
 
     Graph<Tr>& AStar(N from, N to);
+
+    float calculateEuristic(node *from, node *to);
     
 };
 
 template <typename Tr>
+float Graph<Tr>::calculateEuristic(node *from, node *to){
+
+    float heuristic_value = sqrt(pow(((from->get_posx())-(to->get_posx())),2)+pow(((from->get_posy())-(to->get_posy())),2));
+
+    return heuristic_value;
+
+}
+
+template <typename Tr>
 Graph<Tr>& Graph<Tr>::AStar(N from, N to){
-    self* graphAstar = new self(false);
-    queue<node *> Cola;
-    Cola.push(nodes[from]);
-    graphAstar->insertNode(nodes[from]);
-    while(Cola.front()!=nodes[to]){
+
+    //typedef pair<E,float> SE;
+
+    self *graphAstar = new self(false); 
+    node* From = nodes[from];
+    node* current = From;
+    node* To = nodes[to];
+
+    unordered_map<node*,bool> status;
+    multimap<float,node*> total_distance;
+    unordered_map<node*,pair<E,float>> short_euristic;
+    unordered_map<N,N> path;
         
-        //cout<<"buscando"<<endl;
+    short_euristic[From]=make_pair(0,calculateEuristic(From,To));
+    total_distance.insert(make_pair<float,node*&>((short_euristic[From].first + short_euristic[From].second),From));
+
+
+    while(current!=To){
+
+        status[current]=true;
+        for(auto ac = (current->get_edges()).begin();ac!=(current->get_edges()).end();ac++){
+            auto use = ((*ac)->get_nodes())[1];
+            if(status.find(use)!=status.end()){
+                if(status[use]==true){continue;} 
+                E temp_short = (short_euristic[current].first)+(*ac)->get_data();
+                if(temp_short>=short_euristic[use].first){continue;}
+                short_euristic[use].first = temp_short;
+
+            }
+         
+            else{
+                status[use]=false;
+               
+                short_euristic[use]=make_pair<E,float>(((short_euristic[current].first)+(*ac)->get_data()),calculateEuristic(use,To));
+                
+            }
+            total_distance.insert(make_pair<float,node*&>((short_euristic[use].first+short_euristic[use].second),use));
+
+        }
+        for(auto ac = total_distance.begin();ac != total_distance.end();ac++){
+            if((status[ac->second])==false){
+                current = ac->second;
+                cout<<ac->first<<" ";
+                break;
+            }
+        }
+        cout<<current->get_data()<<" - "<<short_euristic[current].first<<" - "<<short_euristic[current].second<<endl;
+        
     }
+
+    for(auto val : short_euristic){
+        cout<<(val.first)->get_data()<<" "<<(val.second).second<<endl;
+    }
+   
+
+
     return *graphAstar;
 }
 

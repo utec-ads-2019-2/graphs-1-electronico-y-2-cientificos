@@ -8,7 +8,8 @@
     "Latitude": "54.910278",
     "Id": "1",
     "destinations": [
-      "2"
+      "2",
+      "6"
     ]
   },{
   "City": "Node 2",
@@ -30,7 +31,18 @@
   "destinations": [
     "4",
     "2",
-    "4"
+    "5"
+  ]
+},{
+  "City": "Node 4",
+  "Name": "Node 4 Airport",
+  "Country": "Imsgine",
+  "Longitude": "-0.782278",
+  "Latitude": "0.910278",
+  "Id": "4",
+  "destinations": [
+    "2",
+    "5"
   ]
 },{
   "City": "Node 4",
@@ -38,7 +50,18 @@
   "Country": "Imsgine",
   "Longitude": "-10.785278",
   "Latitude": "10.910278",
-  "Id": "4",
+  "Id": "5",
+  "destinations": [
+    "3",
+    
+  ]
+},{
+  "City": "Node 4",
+  "Name": "Node 4 Airport",
+  "Country": "Imsgine",
+  "Longitude": "-10.785278",
+  "Latitude": "10.910278",
+  "Id": "6",
   "destinations": [
     "2"
   ]

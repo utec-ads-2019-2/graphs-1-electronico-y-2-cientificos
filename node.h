@@ -11,7 +11,7 @@ public:
     N data;
     EdgeSeq edges,edges_from;
     double x, y;
-    double heuristic_value;
+    //double heuristic_value;
 public:
     Node(N data):data(data){};
     Node(N data, double x, double y):data(data),x(x),y(y){};
@@ -35,9 +35,9 @@ public:
     double get_posy(){return y;}
     void setY(double Y){y = Y;}
 
-    void set_heuristic(Node* to){
+    /*void set_heuristic(Node* to){
         heuristic_value = sqrt(pow(this->x-(to)->get_posx())+pow(this->y-(to)->get_posy()));
-    }
+    }*/
 
 };
 

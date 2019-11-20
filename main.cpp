@@ -10,11 +10,11 @@ int main(int argc, char *argv[]) {
     //graph test(true);
     //char file[]="pruebas.json";
     graph test(false);
-    char file[]="pruebas.json";
+    char file[]="airports.json";
     Read<graph> r(test,file);
     //cout<<test.isConnected()<<endl;
     test.print_graph();
-    graph prueba = test.AStar("1","1");
+    graph prueba = test.AStar("7252","5501");
     /*
    	graph MSTKruskal = test.kruskal();
    	//graph MSTKruskal = test.kruskal();
