@@ -16,11 +16,11 @@ using namespace std;
 int main(int argc, char *argv[]) {
 
     graph test(true);
-    char file[]="pruebas.json";
+    char file[]="airports.json";
     Read<graph> r(test,file);
     //cout<<test.isConnected()<<endl;
-    test.print_graph();
-    graph prueba = test.AStar("1","1");
+    //test.print_graph();
+    //graph prueba = test.AStar("1","1");
     graph d = test.dijkstra("3");
     d.print_graph();
    	//graph MSTKruskal = test.kruskal();
