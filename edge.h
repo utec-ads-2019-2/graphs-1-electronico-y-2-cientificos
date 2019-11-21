@@ -14,7 +14,7 @@ public:
 
 public:
     
-
+    Edge(E data):data(data){};
     Edge(node* from, node* to){
         nodes[0]=from;
         nodes[1]=to;

@@ -11,8 +11,13 @@ TEST_CASE("GIVEN A GRAPH TO READ")
     graph test(false);
     char file[]="airports.json";
     Read<graph> r(test,file);
+
     THEN("PRINT GRAPH")
     {test.print_graph();};
+
+    /*THEN("PRINT GRAPH")
+    {test.print_graph();};*/
+
 }
 TEST_CASE("GIVE A GRAPH TO GET A MST BY KRUSKAL ALGORITHM")
 {
@@ -22,10 +27,17 @@ TEST_CASE("GIVE A GRAPH TO GET A MST BY KRUSKAL ALGORITHM")
     graph kruskal = test1.kruskal();
     REQUIRE(test1.nodes.size()==kruskal.nodes.size());
     REQUIRE(kruskal.isConnected());
+
     THEN("PRINT MST KRUSKAL")
     {
         kruskal.print_graph();
     };
+
+    /*THEN("PRINT MST KRUSKAL")
+    {
+        kruskal.print_graph();
+    };*/
+
 
 }
 TEST_CASE("GIVEN A GRAPH TO GET DENSITY") {
@@ -58,7 +70,22 @@ TEST_CASE("GIVEN A GRAPH TO GET A MST BY PRIM ALGORITHM ")
     {
         prim.print_graph();
 
+
     }
     
 
-}
+
+    };
+    //test4.print_graph();
+    /*cout << "\n\n\n";
+    auto a=test4.bfs("3");
+    auto b=test4.dfs("3");
+    a.print_graph();
+    cout << '\n';
+    b.print_graph();
+    cout << '\n';
+    auto d=test4.dijkstra("3");
+    d.print_graph();*/
+    //for(auto g:d) cout << g.first->get_data() << " -> " << g.second << endl;
+
+

@@ -42,9 +42,6 @@ public:
     EdgeIte ei;
     bool direccionado = false;
 
-
-
-
     Graph() = default;
 
     Graph(bool d):direccionado(d){};
@@ -77,13 +74,14 @@ public:
 
     bool bipartito();
 
-    self& kruskal();
+    void isVisit(node* n,unordered_map<node*,bool> &visit);
 
-    void dfs(node* n,unordered_map<node*,bool> &visit);
+    void fillDfs(node* n,unordered_map<node*,bool> &visit,stack<node*> &s);
 
-    void fillOrder(node* n,unordered_map<node*,bool> &visit,stack<node*> &s);
+    void fillDfs(node* n,unordered_map<node*,bool> &visit,Graph<Tr> &s);
 
-    void setMap(unordered_map<node*,bool> &visit,bool n);
+    template <typename D>
+    void setMap(unordered_map<node*,D> &visit,D n);
 
     bool isConnected();
 
@@ -91,15 +89,95 @@ public:
 
     bool removeEdge(N from, N to);
 
+    self& kruskal();
+
     self& primMST(N start);
 
     Graph<Tr>& AStar(N from, N to);
 
     float calculateEuristic(node *from, node *to);
+
     
+    Graph<Tr> bfs(N name){
+        Graph<Tr> bfs(direccionado); bfs.insertNode(nodes[name]); 
+        queue<node*> qnode; qnode.push(nodes[name]);
+        unordered_map<node*,bool> visit; setMap(visit,false); visit[nodes[name]]=1;
+        while(!qnode.empty()){
+            for(auto e:qnode.front()->get_edges()){
+                if(!visit[e->get_nodes()[1]]){
+                    bfs.insertNode(e->get_nodes()[1]); 
+                    bfs.insertEdge(qnode.front()->get_data(),e->get_nodes()[1]->get_data()); 
+                    visit[e->get_nodes()[1]]=1;
+                    qnode.push(e->get_nodes()[1]);
+                } 
+            }
+            qnode.pop();
+        }
+        return bfs;
+    };
+
+    Graph<Tr> dfs(N name){
+        Graph<Tr> dfs(direccionado); dfs.insertNode(nodes[name]); 
+        unordered_map<node*,bool> visit; setMap(visit,false); visit[nodes[name]]=1;
+        fillDfs(nodes[name],visit,dfs);
+        return dfs;
+    };
+
+    node* findMin(unordered_map<node*,bool> visit, unordered_map<node*,E> distance, node* min){
+        for(auto d:distance)
+            if(!visit[d.first])
+                if(distance[min]>d.second) min=d.first;
+        return min;
+    }
+
+    unordered_map<node*,E> dijkstra(N name){/*
+        Graph<Tr> dijkstra(direccionado); dijkstra.insertNode(nodes[name]);
+        unordered_map<node*,bool> visit; setMap(visit,false); auto minNode=nodes[name];
+        edge *maxE = new edge(numeric_limits<E>::max()); edge *minE = new edge(0); 
+        unordered_map<node*,edge*> distance; setMap(distance,maxE); 
+        distance[minNode]=minE; node* newNode; distance[newNode]=maxE;
+        for(int i=0;i<nodes.size();++i){
+            visit[minNode] = 1;
+            dijkstra.insertNode(minNode);
+            for(auto e:minNode->get_edges()){
+                if(!visit[e->get_nodes()[1]]){
+                    if((distance[minNode]->get_data()+e->get_data())<distance[e->get_nodes()[1]]->get_data()){
+                        distance[e->get_nodes()[1]]=e;
+                    }
+                }
+            }
+            minNode = findMin(visit,distance,newNode);
+            if(minNode==newNode) break; 
+        }
+        distance.erase(nodes[name]);
+        for(auto d:distance) 
+            if(d.second != maxE) 
+                dijkstra.insertEdge(d.second->get_nodes()[0]->get_data(),d.second->get_nodes()[1]->get_data());
+        return dijkstra;*/
+        //Lista con las distancias
+        unordered_map<node*,bool> visit; setMap(visit,false); 
+        unordered_map<node*,E> distance; setMap(distance,numeric_limits<E>::max()); 
+        distance[nodes[name]]=0; node* newNode; distance[newNode]=numeric_limits<E>::max();
+        auto minNode = nodes[name];
+        for(int i=0;i<nodes.size();++i){
+            visit[minNode] = 1;
+            for(auto e:minNode->get_edges()){
+                if(!visit[e->get_nodes()[1]]){
+                    if((distance[minNode]+e->get_data())<distance[e->get_nodes()[1]]){
+                        distance[e->get_nodes()[1]]=distance[minNode]+e->get_data();
+                    }
+                }
+            }
+            minNode = findMin(visit,distance,newNode);
+            if(minNode==newNode) break; 
+        }
+        distance.erase(newNode); return distance;
+    }
 };
+    
 
 template <typename Tr>
+
 float Graph<Tr>::calculateEuristic(node *from, node *to){
 
     float heuristic_value = sqrt(pow(((from->get_posx())-(to->get_posx())),2)+pow(((from->get_posy())-(to->get_posy())),2));
@@ -111,8 +189,6 @@ float Graph<Tr>::calculateEuristic(node *from, node *to){
 template <typename Tr>
 Graph<Tr>& Graph<Tr>::AStar(N from, N to){
 
-    //typedef pair<E,float> SE;
-
     self *graphAstar = new self(false); 
     node* From = nodes[from];
     node* current = From;
@@ -121,11 +197,11 @@ Graph<Tr>& Graph<Tr>::AStar(N from, N to){
     unordered_map<node*,bool> status;
     multimap<float,node*> total_distance;
     unordered_map<node*,pair<E,float>> short_euristic;
-    unordered_map<N,N> path;
+    unordered_map<node*,node*> path;
         
     short_euristic[From]=make_pair(0,calculateEuristic(From,To));
     total_distance.insert(make_pair<float,node*&>((short_euristic[From].first + short_euristic[From].second),From));
-
+    path.insert(make_pair(From,From));
 
     while(current!=To){
 
@@ -137,6 +213,7 @@ Graph<Tr>& Graph<Tr>::AStar(N from, N to){
                 E temp_short = (short_euristic[current].first)+(*ac)->get_data();
                 if(temp_short>=short_euristic[use].first){continue;}
                 short_euristic[use].first = temp_short;
+                path[((*ac)->get_nodes())[1]]=(((*ac)->get_nodes())[0]);
 
             }
          
@@ -144,7 +221,7 @@ Graph<Tr>& Graph<Tr>::AStar(N from, N to){
                 status[use]=false;
                
                 short_euristic[use]=make_pair<E,float>(((short_euristic[current].first)+(*ac)->get_data()),calculateEuristic(use,To));
-                
+                path.insert(make_pair(( ( (*ac)->get_nodes())[1]),( ( (*ac)->get_nodes())[0])));
             }
             total_distance.insert(make_pair<float,node*&>((short_euristic[use].first+short_euristic[use].second),use));
 
@@ -152,18 +229,33 @@ Graph<Tr>& Graph<Tr>::AStar(N from, N to){
         for(auto ac = total_distance.begin();ac != total_distance.end();ac++){
             if((status[ac->second])==false){
                 current = ac->second;
-                cout<<ac->first<<" ";
                 break;
             }
         }
-        cout<<current->get_data()<<" - "<<short_euristic[current].first<<" - "<<short_euristic[current].second<<endl;
-        
+         
     }
 
-    for(auto val : short_euristic){
-        cout<<(val.first)->get_data()<<" "<<(val.second).second<<endl;
+    auto temp = To;
+    vector<node*> final_path;
+    while(temp != path[temp] ){
+        //out<<temp->get_data()<<" "<<path[temp]->get_data()<<endl;
+        final_path.push_back(temp);
+        final_path.push_back(path[temp]);
+        path[temp] = path[path[temp]];
+        temp = path[temp];
     }
-   
+
+    for(auto val : final_path){
+        cout<<(val)->get_data()<<" ";
+    }
+    cout<<endl;
+
+    for(int i=1;i<final_path.size();i++){
+        graphAstar->insertNode(final_path[i-1]);
+        graphAstar->insertNode(final_path[i]);
+        graphAstar->insertEdge(final_path[i-1]->get_data(),final_path[i]->get_data());
+    }
+
 
 
     return *graphAstar;
@@ -187,6 +279,7 @@ void Graph<Tr>::print_graph(){
             cout<<"          "<<setw(6)<<(*ei)->get_nodes()[1]->get_data()<<" - "<<(*ei)->get_data()<<endl;
         }
     }
+    cout << "\n\n";
 }
 
 
@@ -346,7 +439,6 @@ return false;
 }
 
 
-
 template <typename Tr>
 Graph<Tr> & Graph<Tr>::kruskal(){
     if(!isConnected()) throw exception();
@@ -377,31 +469,41 @@ Graph<Tr> & Graph<Tr>::kruskal(){
         }
     }
     return *graph_kruskal;
+
 }
 
-
-
 template <typename Tr>
-void Graph<Tr>::dfs(node* n,unordered_map<node*,bool> &visit){
+void Graph<Tr>::isVisit(node* n,unordered_map<node*,bool> &visit){
     visit[n]=1;
     for(EdgeIte it=n->get_edges().begin();it!=n->get_edges().end();++it)
-        if(!visit[(*it)->get_nodes()[1]]) dfs((*it)->get_nodes()[1],visit);
+        if(!visit[(*it)->get_nodes()[1]]) isVisit((*it)->get_nodes()[1],visit);
+
 }
 
-
-
 template <typename Tr>
-void Graph<Tr>::fillOrder(node* n,unordered_map<node*,bool> &visit,stack<node*> &s){
+void Graph<Tr>::fillDfs(node* n,unordered_map<node*,bool> &visit,stack<node*> &s){
     visit[n]=1;
     for(EdgeIte it=n->get_edges().begin();it!=n->get_edges().end();++it)
-        if(!visit[(*it)->get_nodes()[1]]) fillOrder((*it)->get_nodes()[1],visit,s);
+        if(!visit[(*it)->get_nodes()[1]]) fillDfs((*it)->get_nodes()[1],visit,s);
     s.push(n);
 }
 
 
+template <typename Tr>
+void Graph<Tr>::fillDfs(node* n,unordered_map<node*,bool> &visit,Graph<Tr> &s){
+    visit[n]=1;
+    for(EdgeIte it=n->get_edges().begin();it!=n->get_edges().end();++it)
+        if(!visit[(*it)->get_nodes()[1]]) {
+            s.insertNode((*it)->get_nodes()[1]);
+            s.insertEdge(n->get_data(),(*it)->get_nodes()[1]->get_data());
+            fillDfs((*it)->get_nodes()[1],visit,s);
+        }
+}
+
 
 template <typename Tr>
-void Graph<Tr>::setMap(unordered_map<node*,bool> &visit,bool n){
+template <typename D>
+void Graph<Tr>::setMap(unordered_map<node*,D> &visit,D n){
     for(NodeIte it=nodes.begin();it!=nodes.end();++it) visit[(*it).second]=n;
 }
 
@@ -409,18 +511,18 @@ void Graph<Tr>::setMap(unordered_map<node*,bool> &visit,bool n){
 
 template <typename Tr>
 bool Graph<Tr>::isConnected(){
-    unordered_map<node*,bool> visit;
-    setMap(visit,0);
-    if(!direccionado) dfs((*nodes.begin()).second,visit);
+unordered_map<node*,bool> visit; setMap(visit,false);
+    if(!direccionado) isVisit((*nodes.begin()).second,visit); 
+
     else{
         stack<node*> s;
         for(auto nni=nodes.begin();nni!=nodes.end();++nni){
-            if(!visit[(*nni).second]) fillOrder((*nni).second,visit,s);
+            if(!visit[(*nni).second]) fillDfs((*nni).second,visit,s);
         }
         Graph g1=transpose();
-        setMap(visit,0);
+        setMap(visit,false);
         node* n=s.top(); s.pop();
-        if(!visit[n]) g1.dfs((*g1.nodes.begin()).second,visit);
+        if(!visit[n]) g1.isVisit((*g1.nodes.begin()).second,visit);
     }
     for(auto mi=visit.begin();mi!=visit.end();++mi){
         if(!(*mi).second) return false;
@@ -434,6 +536,9 @@ template <typename Tr>
 bool Graph<Tr>::removeNode(N name){
     NodeIte ndIt = nodes.find(name);
     if(ndIt==nodes.end()) return false;
+    for(ei=(*ndIt).second->get_edges().begin();ei!=(*ndIt).second->get_edges().end();++ei){
+        nodes[(*ei)->get_nodes()[1]->get_data()]->get_edges().remove(*ei);
+    }
     for(ei=(*ndIt).second->get_edges_from().begin();ei!=(*ndIt).second->get_edges_from().end();++ei){
         nodes[(*ei)->get_nodes()[0]->get_data()]->get_edges().remove(*ei);
     }
@@ -447,13 +552,15 @@ template <typename Tr>
 bool Graph<Tr>::removeEdge(N from, N to){
     if(!(nodes.find(from)!=nodes.end() && nodes.find(to)!=nodes.end())) return false;
     edge* f=searchEdge(from,to);
+    edge* g=searchEdge(to,from);
     if(f){
-        nodes[from]->get_edges().remove(f);
-        if(!direccionado) nodes[to]->get_edges().remove(searchEdge(to,from));
+        nodes[from]->get_edges().remove(f);nodes[to]->get_edges_from().remove(g);
+        if(!direccionado) {nodes[to]->get_edges().remove(g);nodes[from]->get_edges_from().remove(f);}
         return true;
     }
     return false;
 }
+
 
 
 
@@ -470,6 +577,7 @@ Graph<Tr> & Graph<Tr>::primMST(N source){
     while(list_of_nodes.size()!=this->nodes.size()){
         for(auto edg : list_of_nodes[list_of_nodes.size()-1]->get_edges()){
 
+
             list_of_edges.insert(make_pair<E,edge>((E)edg->get_data(),(edge)*edg));
         }
         for(auto nod = list_of_edges.begin(); nod != list_of_edges.end();nod++){
@@ -484,6 +592,7 @@ Graph<Tr> & Graph<Tr>::primMST(N source){
     }
 
     
+
     return *graphPRIM;
 }
 
