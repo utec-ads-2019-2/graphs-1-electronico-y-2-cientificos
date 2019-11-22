@@ -1,13 +1,15 @@
-<<<<<<< HEAD
-#define CATCH_CONFIG_MAIN
-#include "catch.hpp"
-#ifndef CATCH_CONFIG_MAIN
+/*
+#include "node.h"
+#include "iostream"
+#include "read.h"
+#include "graph.h"
+#include "edge.h"
 int main()
 {
     return 0;
 }
-#endif
-=======
+*/
+
 #include "iostream"
 #include "read.h"
 #include "graph.h"
@@ -23,21 +25,22 @@ int main(int argc, char *argv[]) {
     //graph MSTKruskal = test.kruskal();
 
     //graph kruskal = test.kruskal();
-    graph prim = test.primMST("2");
+    //graph prim = test.primMST("2");
 
-    if(test.bipartito()){cout<<"es bipartito"<<endl;}
-    else{cout<<"no es bipartito"<<endl;}
-    cout<<test.isConnected()<<endl;
-    test.print_graph();
-    cout<<"Ahora vamos a printear el kruskal "<<endl;
+    //if(test.bipartito()){cout<<"es bipartito"<<endl;}
+    //else{cout<<"no es bipartito"<<endl;}
+    //cout<<test.isConnected()<<endl;
+    test.floyd();
+    //test.print_graph();
+
+    //cout<<"Ahora vamos a printear el kruskal "<<endl;
 
     //MSTKruskal.print_graph();
     //char file2[]="escritura.json";
     //CWrite<graph> w(MSTKruskal,file2);
 
     //kruskal.print_graph();
-    prim.print_graph();
+    //prim.print_graph();
 
     return EXIT_SUCCESS;
 }
->>>>>>> 39e8a4ecdfbacadd78d3c94569cef4ed80f981fd

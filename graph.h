@@ -90,6 +90,8 @@ public:
     bool removeEdge(N from, N to);
 
     self& primMST(N start);
+
+    pair<unordered_map<typename Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>>, unordered_map<typename Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::N>>> floyd();
     
 };
 
@@ -408,8 +410,8 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
     graphPRIM->insertNode(nodes[source]);
     
     while(list_of_nodes.size()!=this->nodes.size()){
-        for(auto edg : list_of_nodes[list_of_nodes.size()-1]->get_edges()){
-
+        for(auto edg : list_of_nodes[list_of_nodes.size()-1]->get_edges())
+        {
             list_of_edges.insert(make_pair<E,edge>((E)edg->get_data(),(edge)*edg));
         }
         for(auto nod = list_of_edges.begin(); nod != list_of_edges.end();nod++){
@@ -418,17 +420,61 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
                 graphPRIM->insertNode(nod->second.get_nodes()[1]);
                 graphPRIM->insertEdge(nod->second.get_nodes()[0]->get_data(),nod->second.get_nodes()[1]->get_data());
                 break;
-
             }
         }
-
     }
-
-    
     return *graphPRIM;
 }
 
 
+template <typename Tr>
+pair<unordered_map<typename Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>>, unordered_map<typename Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::N>>> Graph<Tr>::floyd()
+{
+    unordered_map<N, unordered_map<N,E>> dist;
+    unordered_map<N, unordered_map<N,N>> parent;
+    E inf = numeric_limits<E>::max();
+    for(auto it : nodes)
+    {
+        for(auto jt : nodes)
+        {
+        dist[it.first][jt.first]=inf;
+        parent[it.first][jt.first]=jt.first;
+            if(it.first == jt.first)
+                {
+                    dist[it.first][jt.first]=0;
+                }
+
+        }
+    }
+    for(auto it: nodes)
+    {
+        for(edge* edg: it.second->edges)
+        {
+            N s = edg->nodes[1]->get_data();
+            dist[it.first][s]= edg->get_data();
+            parent[it.first][s]= s;
+        }
+    }
+    for(auto ik: nodes)
+    {
+        N k = ik.first;
+        for(auto ii: nodes)
+        {
+            N i = ii.first;
+            for(auto ij: nodes)
+            {
+                N j = ij.first;
+                E temp = dist[i][k] + dist[k][j];
+                if(temp < dist[i][j])
+                {
+                    dist[i][j]=temp;
+                    parent[i][j]=k;
+                }
+            }
+        }
+    }
+    return make_pair(dist,parent);
+}
 
 typedef Graph<Traits> graph;
 
