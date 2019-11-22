@@ -11,7 +11,6 @@ public:
     N data;
     EdgeSeq edges,edges_from;
     double x, y;
-
     double heuristic_value;
 
 public:

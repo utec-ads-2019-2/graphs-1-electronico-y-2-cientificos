@@ -18,17 +18,18 @@ int main(int argc, char *argv[]) {
     //graph test(true);
     //char file[]="pruebas.json";
     graph test(false);
-    char file[]="airports.json";
+    char file[]="pruebas.json";
     Read<graph> r(test,file);
     //cout<<test.isConnected()<<endl;
     //test.print_graph();
     //graph MSTKruskal = test.kruskal();
-    graph prueba = test.AStar("7252","5501");
+    //graph prueba = test.AStar("1","3");
+    graph prueba = test.Bellman("1");
     //auto prueba = test.dijkstra("3");
     //cout<<"estoy vivo"<<endl;
     //prueba.print_graph();
     //MSTKruskal.print_graph();
-    CWrite<graph> w(prueba,"impreso.json");
+    //CWrite<graph> w(prueba,"impreso.json");
     /*
    	graph MSTKruskal = test.kruskal();
    	//graph MSTKruskal = test.kruskal();

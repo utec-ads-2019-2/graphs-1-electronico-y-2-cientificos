@@ -6,10 +6,11 @@
     "Country": "Imsgine",
     "Longitude": "-80.785278",
     "Latitude": "54.910278",
-    "Id": "1",
+    "Id": "4",
     "destinations": [
       "2",
-      "6"
+      "3",
+      "5"
     ]
   },{
   "City": "Node 2",
@@ -19,7 +20,10 @@
   "Latitude": "30.910278",
   "Id": "2",
   "destinations": [
-    "3"
+    "3",
+    "1",
+    "4",
+    "5"
   ]
 },{
   "City": "Node 3",
@@ -31,7 +35,8 @@
   "destinations": [
     "4",
     "2",
-    "5"
+    "1",
+    "6"
   ]
 },{
   "City": "Node 4",
@@ -39,10 +44,11 @@
   "Country": "Imsgine",
   "Longitude": "-0.782278",
   "Latitude": "0.910278",
-  "Id": "4",
+  "Id": "1",
   "destinations": [
+    "5",
     "2",
-    "5"
+    "3"
   ]
 },{
   "City": "Node 4",
@@ -52,7 +58,7 @@
   "Latitude": "10.910278",
   "Id": "5",
   "destinations": [
-    "3",
+    "6"
     
   ]
 },{
@@ -63,7 +69,7 @@
   "Latitude": "10.910278",
   "Id": "6",
   "destinations": [
-    "2"
+    "1"
   ]
 }
 ]

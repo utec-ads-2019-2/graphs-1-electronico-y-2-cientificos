@@ -46,7 +46,7 @@ public:
 
     Graph(bool d):direccionado(d){};
 
-    ~Graph();
+    //~Graph();
 
     void print_graph();
         
@@ -97,6 +97,7 @@ public:
 
     float calculateEuristic(node *from, node *to);
 
+    Graph<Tr>& Bellman(N from);
     
     Graph<Tr> bfs(N name){
         Graph<Tr> bfs(direccionado); bfs.insertNode(nodes[name]); 
@@ -175,6 +176,64 @@ public:
     }
 };
     
+template <typename Tr>
+Graph<Tr>& Graph<Tr>::Bellman(N from){
+
+    self *graphBellamn = new self(false);
+
+
+
+    unordered_map<node*,E> weight;
+
+    for(auto it : nodes){
+        weight.insert(make_pair(it.second,numeric_limits<E>::max()));
+        //cout<<(it.second)->get_data()<<endl;
+    }
+
+
+
+    weight[nodes[from]]=0;
+
+
+
+    
+
+
+
+    for(int i=0;i<weight.size()-1;i++){
+
+        for(auto itNod = nodes.begin();itNod!=nodes.end();itNod++){
+            
+            for(auto itEdg = (itNod->second)->get_edges().begin(); itEdg!=(itNod->second)->get_edges().end();itEdg++){
+                //cout<<weight[((*itEdg)->get_nodes())[1]]<<endl;
+                if(weight[((*itEdg)->get_nodes())[0]]!=numeric_limits<E>::max() and (weight[((*itEdg)->get_nodes())[0]] +  (*itEdg)->get_data() < weight[((*itEdg)->get_nodes())[1]] ) ){ 
+                    weight[((*itEdg)->get_nodes())[1]] = weight[((*itEdg)->get_nodes())[0]] + (*itEdg)->get_data();
+                    //
+
+                    /*if(weight[((*itEdg)->get_nodes())[0]]==0){
+                        weight[((*itEdg)->get_nodes())[1]] = weight[((*itEdg)->get_nodes())[0]]+((*itedg)->get_data());
+                    }
+                    else{
+                        E temp = weight[((*itEdg)->get_nodes())[0]] += ((*itedg)->get_data());
+                        if(temp<)
+                    }*/
+                    
+                    //cout<<(((*itEdg)->get_nodes())[0])->get_data()<<" - "<<(((*itEdg)->get_nodes())[0])->get_data()<<endl;
+                }
+
+            }
+        }
+    }
+
+    for(auto it : weight){
+        cout<<(it.first)->get_data()<<" - "<<(it.second)<<endl; 
+    }
+
+
+    return *graphBellamn;
+
+}
+
 
 template <typename Tr>
 
@@ -245,11 +304,6 @@ Graph<Tr>& Graph<Tr>::AStar(N from, N to){
         temp = path[temp];
     }
 
-    for(auto val : final_path){
-        cout<<(val)->get_data()<<" ";
-    }
-    cout<<endl;
-
     for(int i=1;i<final_path.size();i++){
         graphAstar->insertNode(final_path[i-1]);
         graphAstar->insertNode(final_path[i]);
@@ -262,13 +316,17 @@ Graph<Tr>& Graph<Tr>::AStar(N from, N to){
 }
 
 
+
+
+/*
+
 template <typename Tr>
 Graph<Tr>::~Graph(){
     for(auto nod : nodes){
         delete nod.second;
     }
     nodes.clear();
-}
+}*/
 
 
 template <typename Tr>

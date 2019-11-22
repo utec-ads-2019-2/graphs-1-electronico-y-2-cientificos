@@ -30,7 +30,6 @@ public:
             airports["City"]="";
             airports["Country"]="";
             airports["Id"]=(*ni).second->get_data();
-            cout<<(*ni).second->get_data()<<endl;
             airports["Longitude"]=(*ni).second->get_posx();
             airports["Latitude"]=(*ni).second->get_posy();
             
