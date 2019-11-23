@@ -119,27 +119,26 @@ public:
         return dfs;
     };
 
-    node* findMin(unordered_map<node*,bool> visit, unordered_map<node*,edge*> distance, node* min){
+    node* findMin(unordered_map<node*,bool> visit, unordered_map<node*,E> distance, node* min){
         for(auto d:distance)
             if(!visit[d.first])
-                if(distance[min]->get_data()>d.second->get_data()) min=d.first;
+                if(distance[min]>d.second) min=d.first;
         return min;
     }
 
     Graph<Tr> dijkstra(N name){
         Graph<Tr> dij(direccionado); auto minNode=nodes[name]; dij.insertNode(minNode);
         unordered_map<node*,bool> visit; setMap(visit,false); 
-        edge *maxE = new edge(numeric_limits<E>::max()); edge *minE = new edge(0); 
-        unordered_map<node*,edge*> distance; setMap(distance,maxE); 
-        distance[minNode]=minE; node *newNode, *tempNode=0; distance[newNode]=maxE;
+        unordered_map<node*,E> distance; setMap(distance,numeric_limits<E>::max()); 
+        distance[minNode]=0; node *newNode, *tempNode=0; distance[newNode]=numeric_limits<E>::max();
         while(minNode!=newNode){
             visit[minNode] = 1;
             dij.insertNode(minNode);
             if(tempNode) dij.insertEdge(tempNode->get_data(),minNode->get_data());
             for(auto e:minNode->get_edges()){
                 if(!visit[e->get_nodes()[1]]){
-                    if((distance[minNode]->get_data()+e->get_data())<distance[e->get_nodes()[1]]->get_data()){
-                        distance[e->get_nodes()[1]]=e;
+                    if((distance[minNode]+e->get_data())<distance[e->get_nodes()[1]]){
+                        distance[e->get_nodes()[1]]=distance[minNode]+e->get_data();
                     }
                 }
             }
