@@ -448,6 +448,7 @@ unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typen
             };
         }
     }
+
     for(NodeIte ni=nodes.begin();ni!=nodes.end();++ni)
     {
         for(edge* ei: (*ni).second->edges)
@@ -473,7 +474,6 @@ unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typen
             }
         }
     }
-
     for(auto iterator_i: nodes)
     {
         N i = iterator_i.first;
@@ -483,6 +483,9 @@ unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typen
             std::cout<< distances[i][j];
         }
     }
+
+
+
     return distances;
 }
 
