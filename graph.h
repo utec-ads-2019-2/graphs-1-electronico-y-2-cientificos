@@ -93,8 +93,9 @@ public:
 
     unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> floyd();
 
-    void print_Floyd(unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>>);
-g
+    void print_Floyd(unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> distances);
+
+
 
 
 };
@@ -462,6 +463,14 @@ unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typen
     }
     return distances;
 }
+template <typename Tr>
+void Graph<Tr>::print_Floyd(unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> distances)
+{
+
+// AYUDA
+}
+
+
 
 
 typedef Graph<Traits> graph;
