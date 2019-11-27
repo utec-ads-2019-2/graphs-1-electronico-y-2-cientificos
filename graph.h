@@ -46,7 +46,7 @@ public:
 
     Graph(bool d):direccionado(d){};
 
-    //~Graph();
+    ~Graph();
 
     void print_graph();
         
@@ -99,7 +99,137 @@ public:
 
     Graph<Tr>& Bellman(N from);
     
-    Graph<Tr> bfs(N name){
+    Graph<Tr>& bfs(N name);
+
+    Graph<Tr>& dfs(N name);
+
+    node* findMin(unordered_map<node*,bool> visit, unordered_map<node*,E> distance, node* min);
+
+
+    unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> floyd();
+
+    node* findMin(unordered_map<node*,bool> visit, unordered_map<node*,edge*> distance, node* min);
+
+    self dijkstra(N name);
+
+   
+};
+
+
+template <typename Tr>
+Graph<Tr> Graph<Tr>::dijkstra(N name){
+    self dijkstra(direccionado); dijkstra.insertNode(nodes[name]);
+    unordered_map<node*,bool> visit; setMap(visit,false); auto minNode=nodes[name];
+    edge *maxE = new edge(numeric_limits<E>::max()); edge *minE = new edge(0); 
+    unordered_map<node*,edge*> distance; setMap(distance,maxE); 
+    distance[minNode]=minE; node* newNode; distance[newNode]=maxE;
+    while(minNode!=newNode){
+        visit[minNode] = 1;
+        dijkstra.insertNode(minNode);
+        for(auto e:minNode->get_edges()){
+            if(!visit[e->get_nodes()[1]]){
+                if((distance[minNode]->get_data()+e->get_data())<distance[e->get_nodes()[1]]->get_data()){
+                    distance[e->get_nodes()[1]]=e;
+                }
+            }
+        }
+        minNode = findMin(visit,distance,newNode);
+    }
+    distance.erase(nodes[name]);
+    for(auto d:distance) 
+        if(d.second != maxE) 
+            dijkstra.insertEdge(d.second->get_nodes()[0]->get_data(),d.second->get_nodes()[1]->get_data());
+    return dijkstra;
+}
+
+template <typename Tr>
+typename Graph<Tr>::node* Graph<Tr>::findMin(unordered_map<node*,bool> visit, unordered_map<node*,edge*> distance, node* min){
+    for(auto d:distance)
+        if(!visit[d.first])
+            if(distance[min]->get_data()>d.second->get_data()) min=d.first;
+    return min;
+}
+
+
+
+template <typename Tr>
+unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> Graph<Tr>::floyd()
+{
+    if(!direccionado) throw exception();
+    unordered_map<N, unordered_map<N, E>> distances;
+
+    for(NodeIte ni=nodes.begin();ni!=nodes.end();++ni)
+    {
+        for(NodeIte nj=nodes.begin();nj!=nodes.end();++nj)
+        {
+            distances[(*ni).first][(*nj).first]= numeric_limits<E>::max();
+            if((*ni).first == (*nj).first)
+            {
+                distances[(*ni).first][(*nj).first] = 0;
+
+            };
+        }
+    }
+
+    for(NodeIte ni=nodes.begin();ni!=nodes.end();++ni)
+    {
+        for(edge* ei: (*ni).second->edges)
+        {
+            distances[(*ni).first][ei->nodes[1]->get_data()]= ei->get_data();
+
+        }
+    }
+    for(NodeIte iterator_k=nodes.begin();iterator_k!=nodes.end();++iterator_k)
+    {
+        N k = (*iterator_k).first;
+        for(NodeIte iterator_i=nodes.begin();iterator_i!=nodes.end();++iterator_i)
+        {
+            N i = (*iterator_i).first;
+            for(NodeIte iterator_j=nodes.begin();iterator_j!=nodes.end();++iterator_j)
+            {
+                N j = (*iterator_j).first;
+                if(distances[i][k] + distances[k][j] < distances[i][j])
+                {
+                    distances[i][j]=distances[i][k] + distances[k][j];
+
+                }
+            }
+        }
+    }
+    for(auto iterator_i: nodes)
+    {
+        N i = iterator_i.first;
+        for(auto iterator_j: nodes)
+        {
+            N j = iterator_j.first;
+            std::cout<<"Matrix value: "<< "i: "<< i << " j: "<< j <<" Distance: "<<distances[i][j]<< endl;
+        }
+    }
+    return distances;
+}
+
+
+
+template <typename Tr>
+typename Graph<Tr>::node* Graph<Tr>::findMin(unordered_map<node*,bool> visit, unordered_map<node*,E> distance, node* min){
+    for(auto d:distance)
+        if(!visit[d.first])
+            if(distance[min]>d.second) min=d.first;
+    return min;
+}
+
+
+
+template <typename Tr>
+Graph<Tr>& Graph<Tr>::dfs(N name){
+    Graph<Tr> dfs(direccionado); dfs.insertNode(nodes[name]); 
+    unordered_map<node*,bool> visit; setMap(visit,false); visit[nodes[name]]=1;
+    fillDfs(nodes[name],visit,dfs);
+    return dfs;
+};
+
+template <typename Tr>
+Graph<Tr>& Graph<Tr>::bfs(N name){
         Graph<Tr> bfs(direccionado); bfs.insertNode(nodes[name]); 
         queue<node*> qnode; qnode.push(nodes[name]);
         unordered_map<node*,bool> visit; setMap(visit,false); visit[nodes[name]]=1;
@@ -115,122 +245,61 @@ public:
             qnode.pop();
         }
         return bfs;
-    };
-
-    Graph<Tr> dfs(N name){
-        Graph<Tr> dfs(direccionado); dfs.insertNode(nodes[name]); 
-        unordered_map<node*,bool> visit; setMap(visit,false); visit[nodes[name]]=1;
-        fillDfs(nodes[name],visit,dfs);
-        return dfs;
-    };
-
-    node* findMin(unordered_map<node*,bool> visit, unordered_map<node*,E> distance, node* min){
-        for(auto d:distance)
-            if(!visit[d.first])
-                if(distance[min]>d.second) min=d.first;
-        return min;
     }
 
-    unordered_map<node*,E> dijkstra(N name){/*
-        Graph<Tr> dijkstra(direccionado); dijkstra.insertNode(nodes[name]);
-        unordered_map<node*,bool> visit; setMap(visit,false); auto minNode=nodes[name];
-        edge *maxE = new edge(numeric_limits<E>::max()); edge *minE = new edge(0); 
-        unordered_map<node*,edge*> distance; setMap(distance,maxE); 
-        distance[minNode]=minE; node* newNode; distance[newNode]=maxE;
-        for(int i=0;i<nodes.size();++i){
-            visit[minNode] = 1;
-            dijkstra.insertNode(minNode);
-            for(auto e:minNode->get_edges()){
-                if(!visit[e->get_nodes()[1]]){
-                    if((distance[minNode]->get_data()+e->get_data())<distance[e->get_nodes()[1]]->get_data()){
-                        distance[e->get_nodes()[1]]=e;
-                    }
-                }
-            }
-            minNode = findMin(visit,distance,newNode);
-            if(minNode==newNode) break; 
-        }
-        distance.erase(nodes[name]);
-        for(auto d:distance) 
-            if(d.second != maxE) 
-                dijkstra.insertEdge(d.second->get_nodes()[0]->get_data(),d.second->get_nodes()[1]->get_data());
-        return dijkstra;*/
-        //Lista con las distancias
-        unordered_map<node*,bool> visit; setMap(visit,false); 
-        unordered_map<node*,E> distance; setMap(distance,numeric_limits<E>::max()); 
-        distance[nodes[name]]=0; node* newNode; distance[newNode]=numeric_limits<E>::max();
-        auto minNode = nodes[name];
-        for(int i=0;i<nodes.size();++i){
-            visit[minNode] = 1;
-            for(auto e:minNode->get_edges()){
-                if(!visit[e->get_nodes()[1]]){
-                    if((distance[minNode]+e->get_data())<distance[e->get_nodes()[1]]){
-                        distance[e->get_nodes()[1]]=distance[minNode]+e->get_data();
-                    }
-                }
-            }
-            minNode = findMin(visit,distance,newNode);
-            if(minNode==newNode) break; 
-        }
-        distance.erase(newNode); return distance;
-    }
-};
     
 template <typename Tr>
 Graph<Tr>& Graph<Tr>::Bellman(N from){
 
-    self *graphBellamn = new self(false);
-
-
+    self *graphBellman = new self(false);
 
     unordered_map<node*,E> weight;
+    unordered_map<node*,unordered_map<node*,node*>>path;
 
-    for(auto it : nodes){
-        weight.insert(make_pair(it.second,numeric_limits<E>::max()));
-        //cout<<(it.second)->get_data()<<endl;
+
+    EdgeSeq alledges;
+
+
+    for(auto itNod = nodes.begin();itNod!=nodes.end();itNod++){
+        weight.insert(make_pair((*itNod).second,numeric_limits<E>::max()));
+        for(auto itEdg = (itNod->second)->get_edges().begin(); itEdg!=(itNod->second)->get_edges().end();itEdg++){
+            alledges.push_back(*itEdg);
+        }
     }
-
 
 
     weight[nodes[from]]=0;
 
 
-
-    
-
-
-
-    for(int i=0;i<weight.size()-1;i++){
+    for(int i=0;i<nodes.size()-1;i++){
 
         for(auto itNod = nodes.begin();itNod!=nodes.end();itNod++){
             
-            for(auto itEdg = (itNod->second)->get_edges().begin(); itEdg!=(itNod->second)->get_edges().end();itEdg++){
-                //cout<<weight[((*itEdg)->get_nodes())[1]]<<endl;
+            for(auto itEdg = alledges.begin();itEdg!= alledges.end();itEdg++){
+             
                 if(weight[((*itEdg)->get_nodes())[0]]!=numeric_limits<E>::max() and (weight[((*itEdg)->get_nodes())[0]] +  (*itEdg)->get_data() < weight[((*itEdg)->get_nodes())[1]] ) ){ 
-                    weight[((*itEdg)->get_nodes())[1]] = weight[((*itEdg)->get_nodes())[0]] + (*itEdg)->get_data();
-                    //
 
-                    /*if(weight[((*itEdg)->get_nodes())[0]]==0){
-                        weight[((*itEdg)->get_nodes())[1]] = weight[((*itEdg)->get_nodes())[0]]+((*itedg)->get_data());
-                    }
-                    else{
-                        E temp = weight[((*itEdg)->get_nodes())[0]] += ((*itedg)->get_data());
-                        if(temp<)
-                    }*/
-                    
-                    //cout<<(((*itEdg)->get_nodes())[0])->get_data()<<" - "<<(((*itEdg)->get_nodes())[0])->get_data()<<endl;
+                    path[((*itEdg)->get_nodes())[1]][((*itEdg)->get_nodes())[1]] = ((*itEdg)->get_nodes())[0];
+ 
+                    weight[((*itEdg)->get_nodes())[1]] = weight[((*itEdg)->get_nodes())[0]] + (*itEdg)->get_data();
+
                 }
 
             }
         }
     }
 
-    for(auto it : weight){
-        cout<<(it.first)->get_data()<<" - "<<(it.second)<<endl; 
+
+    for(auto it : path){
+        for(auto valor : it.second){
+            graphBellman->insertNode(valor.first);
+            graphBellman->insertNode(valor.second);
+            graphBellman->insertEdge(valor.first->get_data(),valor.second->get_data());
+        }
     }
 
 
-    return *graphBellamn;
+    return *graphBellman;
 
 }
 
@@ -297,7 +366,6 @@ Graph<Tr>& Graph<Tr>::AStar(N from, N to){
     auto temp = To;
     vector<node*> final_path;
     while(temp != path[temp] ){
-        //out<<temp->get_data()<<" "<<path[temp]->get_data()<<endl;
         final_path.push_back(temp);
         final_path.push_back(path[temp]);
         path[temp] = path[path[temp]];
@@ -315,18 +383,13 @@ Graph<Tr>& Graph<Tr>::AStar(N from, N to){
     return *graphAstar;
 }
 
-
-
-
-/*
-
 template <typename Tr>
 Graph<Tr>::~Graph(){
     for(auto nod : nodes){
         delete nod.second;
     }
     nodes.clear();
-}*/
+}
 
 
 template <typename Tr>
@@ -368,6 +431,7 @@ bool Graph<Tr>::findEdge(node *node1, node *node2){
 
 template <typename Tr>
 void Graph<Tr>::insertNode(N name){
+    if(nodes.find(name)!=nodes.end()) return ;
     node* newNode = new node(name);
     nodes[name] = newNode;
 }
@@ -376,6 +440,7 @@ void Graph<Tr>::insertNode(N name){
 
 template <typename Tr>
 void Graph<Tr>::insertNode(node* prevNode){
+    if(nodes.find(prevNode->get_data())!=nodes.end()) return ;
     node* newNode = new node(prevNode);
     nodes[prevNode->data]= newNode;
 }

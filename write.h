@@ -14,15 +14,13 @@ template <typename G>
 class CWrite {
     typedef typename G::N N;
     typedef typename G::E E;
-    G g;
+
 
 public:
     
-    CWrite(G &g,string file):g(g) {
+    CWrite(G &g,string file) {
         
-
         Json::Value salida(Json::arrayValue);
-        
 
         
         for(auto ni = g.nodes.begin();ni!=g.nodes.end();++ni){
@@ -39,31 +37,18 @@ public:
             }
             airports["destinations"]=destinations;
             salida.append(Json::Value(airports));
-
+            
         }
 
         std::ofstream file_id;
         file_id.open(file);
         Json::StyledWriter styledWriter;
         file_id << styledWriter.write(salida);
-
         file_id.close();
-   
+
+    
     }
 
-/*
-    "Longitude": "-93.7931",
-    "Latitude": "51.0669",
-    for(NodeIte ni = nodes.begin();ni!=nodes.end();++ni){
-        cout<<"Node "<<setw(5)<<(*ni).second->get_data()<<" : "<<endl;
-        for(EdgeIte ei = (*ni).second->get_edges().begin();ei != (*ni).second->get_edges().end();ei++){
-            cout<<"          "<<setw(6)<<(*ei)->get_nodes()[1]->get_data()<<" - "<<(*ei)->get_data()<<endl;
-        }
-    }*/
-
-    graph& getGraph() {
-        return g;
-    }
 };
 
 #endif

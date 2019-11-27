@@ -2,49 +2,49 @@
    {
       "City" : "",
       "Country" : "",
-      "Id" : "161",
-      "Latitude" : 52.921943664550781,
-      "Longitude" : -66.86444091796875,
-      "destinations" : [ "188" ]
+      "Id" : "4",
+      "Latitude" : 0.91027802228927612,
+      "Longitude" : -123.78227996826172,
+      "destinations" : [ "2" ]
    },
    {
       "City" : "",
       "Country" : "",
-      "Id" : "7252",
+      "Id" : "3",
+      "Latitude" : 0.91027802228927612,
+      "Longitude" : -0.78527802228927612,
+      "destinations" : [ "1" ]
+   },
+   {
+      "City" : "",
+      "Country" : "",
+      "Id" : "6",
+      "Latitude" : 105.9102783203125,
+      "Longitude" : -143.77999877929688,
+      "destinations" : [ "1" ]
+   },
+   {
+      "City" : "",
+      "Country" : "",
+      "Id" : "5",
+      "Latitude" : 10.9102783203125,
+      "Longitude" : -10.7852783203125,
+      "destinations" : [ "1" ]
+   },
+   {
+      "City" : "",
+      "Country" : "",
+      "Id" : "1",
       "Latitude" : 54.9102783203125,
-      "Longitude" : -59.7852783203125,
-      "destinations" : [ "188" ]
+      "Longitude" : -80.7852783203125,
+      "destinations" : [ "6", "3", "5", "2" ]
    },
    {
       "City" : "",
       "Country" : "",
-      "Id" : "188",
-      "Latitude" : 53.319168090820312,
-      "Longitude" : -60.425834655761719,
-      "destinations" : [ "7252" ]
-   },
-   {
-      "City" : "",
-      "Country" : "",
-      "Id" : "146",
-      "Latitude" : 45.470554351806641,
-      "Longitude" : -73.740829467773438,
-      "destinations" : [ "161" ]
-   },
-   {
-      "City" : "",
-      "Country" : "",
-      "Id" : "5501",
-      "Latitude" : 51.69110107421875,
-      "Longitude" : -76.135597229003906,
-      "destinations" : [ "5514" ]
-   },
-   {
-      "City" : "",
-      "Country" : "",
-      "Id" : "5514",
-      "Latitude" : 49.771900177001953,
-      "Longitude" : -74.528099060058594,
-      "destinations" : [ "146" ]
+      "Id" : "2",
+      "Latitude" : 30.9102783203125,
+      "Longitude" : -30.7852783203125,
+      "destinations" : [ "4", "1" ]
    }
 ]
