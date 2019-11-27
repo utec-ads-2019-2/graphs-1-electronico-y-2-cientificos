@@ -8,7 +8,8 @@
     "Latitude": "54.910278",
     "Id": "1",
     "destinations": [
-      "2"
+      "2",
+      "3"
     ]
   },{
   "City": "Node 2",
@@ -18,7 +19,9 @@
   "Latitude": "30.910278",
   "Id": "2",
   "destinations": [
-    "3"
+    "3",
+    "1"
+
   ]
 },{
   "City": "Node 3",
@@ -28,9 +31,7 @@
   "Latitude": "0.910278",
   "Id": "3",
   "destinations": [
-    "4",
-    "2",
-    "4"
+    "6"
   ]
 },{
   "City": "Node 4",
@@ -40,7 +41,7 @@
   "Latitude": "10.910278",
   "Id": "4",
   "destinations": [
-    "2"
+    "1"
   ]
 }
 ]

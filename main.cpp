@@ -18,7 +18,7 @@ int main()
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    graph test(false);
+    graph test(true);
     char file[]="pruebas.json";
     Read<graph> r(test,file);
 
@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
     //if(test.bipartito()){cout<<"es bipartito"<<endl;}
     //else{cout<<"no es bipartito"<<endl;}
     //cout<<test.isConnected()<<endl;
+
     test.floyd();
     //test.print_graph();
 

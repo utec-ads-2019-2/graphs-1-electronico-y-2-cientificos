@@ -93,7 +93,7 @@ public:
 
     unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> floyd();
 
-    void print_Floyd(unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> distances);
+    //void print_Floyd(unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> distances);
 
 
 
@@ -433,26 +433,38 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
 template <typename Tr>
 unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> Graph<Tr>::floyd()
 {
-
     if(!direccionado) throw exception();
     unordered_map<N, unordered_map<N, E>> distances;
-    for(auto ni: nodes)
+
+    for(NodeIte ni=nodes.begin();ni!=nodes.end();++ni)
     {
-        for(edge* ei: ni.second->edges)
+        for(NodeIte nj=nodes.begin();nj!=nodes.end();++nj)
         {
-            distances[ni.first][ei->nodes[1]->get_data()]= ei->get_data();
+            distances[(*ni).first][(*nj).first]= numeric_limits<E>::max();
+            if((*ni).first == (*nj).first)
+            {
+                distances[(*ni).first][(*nj).first] = 0;
+
+            };
+        }
+    }
+    for(NodeIte ni=nodes.begin();ni!=nodes.end();++ni)
+    {
+        for(edge* ei: (*ni).second->edges)
+        {
+            distances[(*ni).first][ei->nodes[1]->get_data()]= ei->get_data();
 
         }
     }
-    for(auto iterator_k : nodes)
+    for(NodeIte iterator_k=nodes.begin();iterator_k!=nodes.end();++iterator_k)
     {
-        N k = iterator_k.first;
-        for(auto iterator_i: nodes)
+        N k = (*iterator_k).first;
+        for(NodeIte iterator_i=nodes.begin();iterator_i!=nodes.end();++iterator_i)
         {
-            N i = iterator_i.first;
-            for(auto iterator_j: nodes)
+            N i = (*iterator_i).first;
+            for(NodeIte iterator_j=nodes.begin();iterator_j!=nodes.end();++iterator_j)
             {
-                N j = iterator_j.first;
+                N j = (*iterator_j).first;
                 if(distances[i][k] + distances[k][j] < distances[i][j])
                 {
                     distances[i][j]=distances[i][k] + distances[k][j];
@@ -461,13 +473,17 @@ unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typen
             }
         }
     }
-    return distances;
-}
-template <typename Tr>
-void Graph<Tr>::print_Floyd(unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> distances)
-{
 
-// AYUDA
+    for(auto iterator_i: nodes)
+    {
+        N i = iterator_i.first;
+        for(auto iterator_j: nodes)
+        {
+            N j = iterator_j.first;
+            std::cout<< distances[i][j];
+        }
+    }
+    return distances;
 }
 
 
