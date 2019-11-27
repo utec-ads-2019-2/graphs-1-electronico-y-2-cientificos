@@ -480,12 +480,9 @@ unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typen
         for(auto iterator_j: nodes)
         {
             N j = iterator_j.first;
-            std::cout<< "i:"<< i << "j:"<< j <<"  distance:"<<distances[i][j]<<  "    "<< "s:  "<< iterator_j.second << endl;
+            std::cout<<"Matrix value: "<< "i: "<< i << " j: "<< j <<" Distance: "<<distances[i][j]<< endl;
         }
     }
-
-
-
     return distances;
 }
 
