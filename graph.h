@@ -91,8 +91,10 @@ public:
 
     self& primMST(N start);
 
-    pair<vector<vector<typename Graph<Tr>::E>>,vector<vector<typename Graph<Tr>::N>>> floyd();
+    unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> floyd();
 
+    void print_Floyd(unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>>);
+g
 
 
 };
@@ -427,46 +429,38 @@ Graph<Tr> & Graph<Tr>::primMST(N source)
     }
     return *graphPRIM;
 }
-
-
-
-template<typename Tr>
-pair<vector<vector<typename Graph<Tr>::E>>,vector<vector<typename Graph<Tr>::N>>> Graph<Tr>::floyd()
+template <typename Tr>
+unordered_map<typename  Graph<Tr>::N, unordered_map<typename Graph<Tr>::N, typename Graph<Tr>::E>> Graph<Tr>::floyd()
 {
-    vector<vector<E>> distance(nodes.size(), vector<E> (nodes.size()));
-    vector<vector<N>> parent(nodes.size(), vector<N> (nodes.size()));
-    E inf = numeric_limits<E>::max();
 
-    for(auto i: nodes)
+    if(!direccionado) throw exception();
+    unordered_map<N, unordered_map<N, E>> distances;
+    for(auto ni: nodes)
     {
-        vector<E> temp;
-        vector<N> temp_1;
-        for(auto j:nodes)
+        for(edge* ei: ni.second->edges)
         {
-            temp.push_back(inf);
-            temp_1.push_back(j.first);
-            if(i.first == j.first)
+            distances[ni.first][ei->nodes[1]->get_data()]= ei->get_data();
+
+        }
+    }
+    for(auto iterator_k : nodes)
+    {
+        N k = iterator_k.first;
+        for(auto iterator_i: nodes)
+        {
+            N i = iterator_i.first;
+            for(auto iterator_j: nodes)
             {
-                temp.push_back(0);
+                N j = iterator_j.first;
+                if(distances[i][k] + distances[k][j] < distances[i][j])
+                {
+                    distances[i][j]=distances[i][k] + distances[k][j];
+
+                }
             }
         }
-        distance.push_back(temp);
-        parent.push_back(temp_1);
     }
-    for(auto i: nodes)
-    {
-        vector<E> temp;
-        vector<N> temp_1;
-        for(edge* edg: i.second->edges)
-        {
-            N x = edg->nodes[1]->data;
-            temp.push_back(edg->get_data());
-            temp_1.push_back(x);
-        }
-        distance.push_back(temp);
-        parent.push_back(temp_1);
-    }
-    return make_pair(distance,parent);
+    return distances;
 }
 
 
