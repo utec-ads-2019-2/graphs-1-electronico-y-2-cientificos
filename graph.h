@@ -94,79 +94,13 @@ public:
 
     self& primMST(N start);
 
-    Graph<Tr> bfs(N name){
-        Graph<Tr> bfs(direccionado); bfs.insertNode(nodes[name]); 
-        queue<node*> qnode; qnode.push(nodes[name]);
-        unordered_map<node*,bool> visit; setMap(visit,false); visit[nodes[name]]=1;
-        while(!qnode.empty()){
-            for(auto e:qnode.front()->get_edges()){
-                if(!visit[e->get_nodes()[1]]){
-                    bfs.insertNode(e->get_nodes()[1]); 
-                    bfs.insertEdge(qnode.front()->get_data(),e->get_nodes()[1]->get_data()); 
-                    visit[e->get_nodes()[1]]=1;
-                    qnode.push(e->get_nodes()[1]);
-                } 
-            }
-            qnode.pop();
-        }
-        return bfs;
-    };
+    self bfs(N name);
 
-    Graph<Tr> dfs(N name){
-        Graph<Tr> dfs(direccionado); dfs.insertNode(nodes[name]); 
-        unordered_map<node*,bool> visit; setMap(visit,false); visit[nodes[name]]=1;
-        fillDfs(nodes[name],visit,dfs);
-        return dfs;
-    };
+    self dfs(N name);
 
-    node* findMin(unordered_map<node*,bool> visit, unordered_map<node*,E> distance, node* min){
-        for(auto d:distance)
-            if(!visit[d.first])
-                if(distance[min]>d.second) min=d.first;
-        return min;
-    }
+    node* findMin(unordered_map<node*,bool> visit, unordered_map<node*,edge*> distance, node* min);
 
-    Graph<Tr> dijkstra(N name){
-        Graph<Tr> dij(direccionado); auto minNode=nodes[name]; dij.insertNode(minNode);
-        unordered_map<node*,bool> visit; setMap(visit,false); 
-        unordered_map<node*,E> distance; setMap(distance,numeric_limits<E>::max()); 
-        distance[minNode]=0; node *newNode, *tempNode=0; distance[newNode]=numeric_limits<E>::max();
-        while(minNode!=newNode){
-            visit[minNode] = 1;
-            dij.insertNode(minNode);
-            if(tempNode) dij.insertEdge(tempNode->get_data(),minNode->get_data());
-            for(auto e:minNode->get_edges()){
-                if(!visit[e->get_nodes()[1]]){
-                    if((distance[minNode]+e->get_data())<distance[e->get_nodes()[1]]){
-                        distance[e->get_nodes()[1]]=distance[minNode]+e->get_data();
-                    }
-                }
-            }
-            tempNode = minNode;
-            distance.erase(minNode);
-            minNode = findMin(visit,distance,newNode);
-        }
-        return dij;
-        //Lista con las distancias
-        /*unordered_map<node*,bool> visit; setMap(visit,false); auto minNode=nodes[name];
-        unordered_map<node*,E> distance; setMap(distance,numeric_limits<E>::max()); 
-        distance[nodes[name]]=0; node* newNode; distance[newNode]=numeric_limits<E>::max();
-        auto minNode = nodes[name];
-        for(int i=0;i<nodes.size();++i){
-            visit[minNode] = 1;
-            dfs.insertNode(minNode);
-            for(auto e:minNode->get_edges()){
-                if(!visit[e->get_nodes()[1]]){
-                    if((distance[minNode]+e->get_data())<distance[e->get_nodes()[1]]){
-                        distance[e->get_nodes()[1]]=distance[minNode]+e->get_data();
-                    }
-                }
-            }
-            minNode = findMin(visit,distance,newNode);
-            if(minNode==newNode) break; 
-        }
-        distance.erase(newNode); return distance;*/
-    };
+    self dijkstra(N name);
 
     Graph<Tr>& AStar(N from, N to);
     
@@ -517,6 +451,70 @@ Graph<Tr> & Graph<Tr>::primMST(N source){
     return *graphPRIM;
 }
 
+
+template <typename Tr>
+Graph<Tr> Graph<Tr>::bfs(N name){
+    self bfs(direccionado); bfs.insertNode(nodes[name]); 
+    queue<node*> qnode; qnode.push(nodes[name]);
+    unordered_map<node*,bool> visit; setMap(visit,false); visit[nodes[name]]=1;
+    while(!qnode.empty()){
+        for(auto e:qnode.front()->get_edges()){
+            if(!visit[e->get_nodes()[1]]){
+                bfs.insertNode(e->get_nodes()[1]); 
+                bfs.insertEdge(qnode.front()->get_data(),e->get_nodes()[1]->get_data()); 
+                visit[e->get_nodes()[1]]=1;
+                qnode.push(e->get_nodes()[1]);
+            } 
+        }
+        qnode.pop();
+    }
+    return bfs;
+}
+
+
+template <typename Tr>
+Graph<Tr> Graph<Tr>::dfs(N name){
+    self dfs(direccionado); dfs.insertNode(nodes[name]); 
+    unordered_map<node*,bool> visit; setMap(visit,false); visit[nodes[name]]=1;
+    fillDfs(nodes[name],visit,dfs);
+    return dfs;
+}
+
+
+template <typename Tr>
+typename Graph<Tr>::node* Graph<Tr>::findMin(unordered_map<node*,bool> visit, unordered_map<node*,edge*> distance, node* min){
+    for(auto d:distance)
+        if(!visit[d.first])
+            if(distance[min]->get_data()>d.second->get_data()) min=d.first;
+    return min;
+}
+
+
+template <typename Tr>
+Graph<Tr> Graph<Tr>::dijkstra(N name){
+    self dijkstra(direccionado); dijkstra.insertNode(nodes[name]);
+    unordered_map<node*,bool> visit; setMap(visit,false); auto minNode=nodes[name];
+    edge *maxE = new edge(numeric_limits<E>::max()); edge *minE = new edge(0); 
+    unordered_map<node*,edge*> distance; setMap(distance,maxE); 
+    distance[minNode]=minE; node* newNode; distance[newNode]=maxE;
+    while(minNode!=newNode){
+        visit[minNode] = 1;
+        dijkstra.insertNode(minNode);
+        for(auto e:minNode->get_edges()){
+            if(!visit[e->get_nodes()[1]]){
+                if((distance[minNode]->get_data()+e->get_data())<distance[e->get_nodes()[1]]->get_data()){
+                    distance[e->get_nodes()[1]]=e;
+                }
+            }
+        }
+        minNode = findMin(visit,distance,newNode);
+    }
+    distance.erase(nodes[name]);
+    for(auto d:distance) 
+        if(d.second != maxE) 
+            dijkstra.insertEdge(d.second->get_nodes()[0]->get_data(),d.second->get_nodes()[1]->get_data());
+    return dijkstra;
+}
 
 
 typedef Graph<Traits> graph;

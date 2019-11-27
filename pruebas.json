@@ -8,7 +8,9 @@
     "Latitude": "54.910278",
     "Id": "1",
     "destinations": [
-      "2"
+      "2",
+      "3",
+      "4"
     ]
   },{
   "City": "Node 2",
